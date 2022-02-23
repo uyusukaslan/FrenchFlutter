@@ -1,17 +1,29 @@
 [
   {
     "title": "Lesson 1",
-    "pages": {
-      "type": "text",
-      "text": "11111111111111"
-    }
+    "pages": [
+      {
+        "type": "text",
+        "text": "11111111111111"
+      },
+      {
+        "type": "video",
+        "text": "123123123"
+      }
+    ]
   },
   {
     "title": "Lesson 2",
-    "pages": {
-      "type": "text",
-      "text": "22222222222222"
-    }
+    "pages": [
+      {
+        "type": "text",
+        "text": "22222222222222"
+      },
+      {
+        "type": "text",
+        "text": "9897987"
+      }
+    ]
   }
 
 ]

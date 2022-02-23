@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'lesson/lesson.dart';
+import 'package:french/main/lesson/lesson.dart';
+import 'lesson/create_lesson.dart';
 import 'dart:convert';
 import 'dart:async' show Future;
 
@@ -11,28 +12,20 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+
   @override
   Widget build(BuildContext context) {
     return buildBody(context);
   }
-  
-  final lesson = Lesson();
 
-  late List data;
 
-  Future<String> loadJsonData() async {
-    var jsonText = await rootBundle.loadString('assets/people.json');
-    setState(() => data = json.decode(jsonText));
-    return 'success';
-  }
-
-  
   Widget buildBody(BuildContext context){
     return SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         //crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          ElevatedButton(onPressed: changePage, child: Text("CHANGE PAGE")),
           const Center(
             child: Padding(
               padding: EdgeInsets.all(15.0),
@@ -47,19 +40,19 @@ class _ProfileState extends State<Profile> {
             child: Padding(
               padding: EdgeInsets.all(15.0),
               //child: Text("Poyraz Erdoğan", textAlign: TextAlign.right, style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600),),
-              child: ListView.builder(
-                itemCount: 2,
-                itemBuilder: (BuildContext context, int index){
-                  loadJsonData();
-                  return ListTile(
-                    title: data[index]["title"],
-                  );
-                },
-              )
+              child: Text("ıashda")
             ),
           )
         ],
       ),
+    );
+  }
+
+  void changePage() {
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => Lesson()),
+          (Route<dynamic> route) => false,
     );
   }
 }

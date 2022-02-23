@@ -57,7 +57,8 @@ dev_dependencies:
 flutter:
 
   assets:
-    - assets/images/
+    - assets/images/a.jpg
+    - assets/data/lesson_data/lesson_data.json
 
   fonts:
     - family: playfair_display
