@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "875736704904",
+    "project_id": "gallus-f87a8",
+    "storage_bucket": "gallus-f87a8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:875736704904:android:3e235a5a6890c8c9a1bc3d",
+        "android_client_info": {
+          "package_name": "com.poyraz.erdogan.french"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "875736704904-frbr9mgtaed0n1a6f8v381jh546m24mh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtEuq6G7TlJwX0AuNdKZVgKdB6xFudhgA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "875736704904-frbr9mgtaed0n1a6f8v381jh546m24mh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

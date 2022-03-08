@@ -24,7 +24,6 @@ class _LessonState extends State<Lesson> {
   int _lesson_index = 0;
   int _page_index = 0;
 
-  final lesson = CreateLesson();
   List data = [];
   String jsonResult = "";
 
@@ -54,21 +53,52 @@ class _LessonState extends State<Lesson> {
   }
 
   Widget buildBody() {
-    return setLesson();
+
+    return Container(
+      height: 900,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+
+              child: setLesson(),
+        ),
+
+    );
   }
 
   Widget setLesson(){
-    switch(data.isNotEmpty ? data[_lesson_index]['pages'][0]['type'] : null){
+    var page = data[_lesson_index]['pages'][_page_index];
+
+    //switch("video"){
+    switch(data.isNotEmpty ? page['type'] : null){
       case "text":
-        return lesson.createText(data[_lesson_index]['pages'][_page_index]['text']);
+        return Text("Text");
       case "video":
-        return lesson.createVideo();
+        return CreateVideo(page['path']);
+      case "word":
+        return CreateWord(page['path'], page['word'], page['sentence']);
       default:
-        return Text("Bir hata oluştu.");
+        return Text("Bir hata oluştu. " + page.toString());
     }
   }
 
   Widget buildNavbar() {
-    return Text("data");
+    return Container(
+      height: 70,
+      color: Colors.lightGreenAccent,
+      child: Center(
+        child: ElevatedButton(
+          onPressed: (){
+            setState(() {
+              _page_index < data[_lesson_index]['pages'].length - 1 ? _page_index++ : null;
+            });
+          },
+          child: Icon(Icons.forward, color: Colors.orange,),
+          style: ElevatedButton.styleFrom(
+            primary: Colors.transparent,
+            shadowColor: Colors.transparent,
+          ),
+        )
+        )
+    );
   }
 }

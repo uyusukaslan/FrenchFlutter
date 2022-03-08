@@ -3,12 +3,30 @@
     "title": "Lesson 1",
     "pages": [
       {
-        "type": "text",
-        "text": "11111111111111"
+        "type": "word",
+        "word": "möö",
+        "sentence": "İnek, möö diye ses çıkarır.",
+        "path": "assets/audio/moo.mp3"
       },
       {
         "type": "video",
-        "text": "123123123"
+        "text": "123123123",
+        "path": "assets/video/video_1.mp4"
+      },
+      {
+        "type": "word",
+        "word": "une Cuisiniére",
+        "sentence": "Ma mére est une cuisiniére.",
+        "path": "assets/audio/une_cuisiniere.mp4"
+      },
+      {
+        "type": "audio_match",
+        "text": "une cuisiniere",
+        "answers": [
+          "assets/audio/moo.mp3",
+          "assets/audio/une_cuisiniere.mp4"
+        ],
+        "correct_answer_index":
       }
     ]
   },
