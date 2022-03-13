@@ -35,6 +35,9 @@ dependencies:
   curved_navigation_bar: ^1.0.1
   just_audio: ^0.9.20
   video_player: ^2.2.19
+  square_percent_indicater: ^0.1.0
+  persistent_bottom_nav_bar: ^4.0.2
+  percent_indicator: ^3.4.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -60,6 +63,7 @@ flutter:
 
   assets:
     - assets/images/a.jpg
+    - assets/images/food_icon.png
     - assets/data/lesson_data/lesson_data.json
     - assets/audio/
     - assets/video/

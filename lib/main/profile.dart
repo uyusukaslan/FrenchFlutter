@@ -51,7 +51,7 @@ class _ProfileState extends State<Profile> {
   void changePage() {
     Navigator.pushAndRemoveUntil(
       context,
-      MaterialPageRoute(builder: (context) => Lesson()),
+      MaterialPageRoute(builder: (context) => Lesson(0)),
           (Route<dynamic> route) => false,
     );
   }

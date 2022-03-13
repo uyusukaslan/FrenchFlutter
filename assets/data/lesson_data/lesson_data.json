@@ -1,13 +1,9 @@
 [
   {
-    "title": "Lesson 1",
+    "title": "Selamlaşma",
+    "status": "completed",
+    "image": "assets/images/a.jpg",
     "pages": [
-      {
-        "type": "word",
-        "word": "möö",
-        "sentence": "İnek, möö diye ses çıkarır.",
-        "path": "assets/audio/moo.mp3"
-      },
       {
         "type": "video",
         "text": "123123123",
@@ -15,31 +11,99 @@
       },
       {
         "type": "word",
-        "word": "une Cuisiniére",
-        "sentence": "Ma mére est une cuisiniére.",
+        "word": "une Cuisinière",
+        "sentence": "Ma mère est une cuisinière.",
         "path": "assets/audio/une_cuisiniere.mp4"
       },
       {
         "type": "audio_match",
-        "text": "une cuisiniere",
+        "text": "une cuisinière",
         "answers": [
           "assets/audio/moo.mp3",
           "assets/audio/une_cuisiniere.mp4"
         ],
-        "correct_answer_index":
+        "correct_answer_index": 1
+      },
+      {
+        "type": "complete_text",
+        "image": "assets/images/a.jpg",
+        "text": "Je suis...",
+        "answer": "une cuisinière"
       }
     ]
   },
   {
-    "title": "Lesson 2",
+    "title": "Kendini Tanıtma",
+    "status": "completed",
     "pages": [
       {
-        "type": "text",
-        "text": "22222222222222"
+        "type": "audio_match",
+        "text": "une cuisinière",
+        "answers": [
+          "assets/audio/moo.mp3",
+          "assets/audio/une_cuisiniere.mp4"
+        ],
+        "correct_answer_index": 1
       },
       {
         "type": "text",
         "text": "9897987"
+      }
+    ]
+  },
+  {
+    "title": "Ülkeler",
+    "status": "onProgress",
+    "pages": [
+      {
+        "type": "text",
+        "text": "assdaad"
+      },
+      {
+        "type": "text",
+        "text": "qweqweqweeqw"
+      }
+    ]
+  },
+  {
+    "title": "Lesson 4",
+    "status": "locked",
+    "pages": [
+      {
+        "type": "text",
+        "text": "assdaad"
+      },
+      {
+        "type": "text",
+        "text": "qweqweqweeqw"
+      }
+    ]
+  },
+  {
+    "title": "Lesson 5",
+    "status": "locked",
+    "pages": [
+      {
+        "type": "text",
+        "text": "assdaad"
+      },
+      {
+        "type": "text",
+        "text": "qweqweqweeqw"
+      }
+    ]
+  },
+  {
+    "title": "Lesson 6",
+    "status": "locked",
+    "pages": [
+      {
+        "type": "text",
+        "text": "assdaad"
+      },
+      {
+        "type": "text",
+        "text": "qweqweqweeqw"
       }
     ]
   }
