@@ -129,7 +129,7 @@ class HomeState extends State {
   List<Widget> _buildScreens() {
     return [
       Study(),
-      Welcome(),
+      Profile(),
       Profile()
     ];
   }
@@ -137,10 +137,10 @@ class HomeState extends State {
   Widget changePage(int page){
     switch (page){
       case 0: return Study();
-      case 1: return Welcome();
+      case 1: return Profile();
       case 2: return Profile();
     }
-    return Welcome();
+    return Profile();
   }
 
   List<PersistentBottomNavBarItem> _navBarsItems() {

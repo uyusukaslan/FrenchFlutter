@@ -1,7 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:french/main/lesson/lesson.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:video_player/video_player.dart';
+
+import 'lesson_service.dart';
 //import 'package:google_fonts/google_fonts.dart';
 
 class CreateWord extends StatefulWidget {
@@ -99,6 +102,7 @@ class _CreateVideoState extends State<CreateVideo> {
               child: Align(
                 alignment: Alignment.center,
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Text("Videoyu İzle", style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w600),),
 
@@ -109,7 +113,7 @@ class _CreateVideoState extends State<CreateVideo> {
                       child: InkWell(onTap: (){
                         _controller.value.isPlaying ? _controller.pause() : _controller.play();
                       }
-                      ,child: Container(child: VideoPlayer(_controller))),
+                      ,child: Flexible(child: VideoPlayer(_controller))),
                     ),
                   ],
                 ),
@@ -119,7 +123,7 @@ class _CreateVideoState extends State<CreateVideo> {
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: ElevatedButton(onPressed: (){
-
+                  nextPage();
                 }, child: Text("İleri")
                 ),
               ),
@@ -131,17 +135,50 @@ class _CreateVideoState extends State<CreateVideo> {
 
 //----------------- COMPLETE TEXT ----------------
 
-class _CreateCompleteText extends StatefulWidget {
-  const _CreateCompleteText({Key? key}) : super(key: key);
+class CreateCompleteText extends StatefulWidget {
+
+  String text = '';
+  String answer = '';
+  String complete = '';
+
+  CreateCompleteText(this.text, this.answer, this.complete);
 
   @override
   _CreateCompleteTextState createState() => _CreateCompleteTextState();
 }
 
-class _CreateCompleteTextState extends State<_CreateCompleteText> {
+class _CreateCompleteTextState extends State<CreateCompleteText> {
+
+  TextEditingController answerController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Expanded(
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text("Boşluğa ne gelmelidir?"),
+            Text(widget.text),
+            TextField(
+              controller: answerController,
+            ),
+
+            Expanded(
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: ElevatedButton(onPressed: (){
+                  answerController.text.trim().toLowerCase()== widget.answer.toLowerCase() ? correct(context, widget.complete) : inCorrect(context, widget.complete);
+                },child: Text("İleri")
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -153,7 +190,9 @@ class CreateAudioMatch extends StatefulWidget {
   var pathsToPlay = [];
   String text = '';
   var correct_answer_index;
-  CreateAudioMatch(this.pathsToPlay, this.text, this.correct_answer_index);
+  String complete = '';
+
+  CreateAudioMatch(this.pathsToPlay, this.text, this.correct_answer_index, this.complete);
 
   @override
   _CreateAudioMatchState createState() => _CreateAudioMatchState();
@@ -178,59 +217,133 @@ class _CreateAudioMatchState extends State<CreateAudioMatch> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return Expanded(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text("Ses ile metni eşleştir"),
-          Text(widget.text),
-          Row(
-            children: [
+          Text("Ses ile metni eşleştir", style: TextStyle(color: Colors.white, fontSize: 19, fontWeight: FontWeight.bold),),
+          SizedBox(height: 10),
+          Text(widget.text, style: TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.bold),),
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
 
-              ElevatedButton(
-                child: Icon(Icons.speaker),
-                onPressed: () async{
-                  await player.setAsset(widget.pathsToPlay[0]);
-                  _selected = 0;
-                  player.play();
+                CircleAvatar(
+                  radius: 60,
+                  backgroundColor: Color(0xffff7548),
+                  child: IconButton(
+                    iconSize: 60,
+                    icon: Icon(CupertinoIcons.speaker_2),
+                    onPressed: () async{
+                      await player.setAsset(widget.pathsToPlay[0]);
+                      _selected = 0;
+                      player.play();
+                    },
+                  ),
+                ),
+
+                CircleAvatar(
+                  radius: 60,
+                  backgroundColor: Color(0xffff7548),
+                  child: IconButton(
+                    iconSize: 60,
+                    icon: Icon(CupertinoIcons.speaker_2_fill),
+                    onPressed: () async{
+                      await player.setAsset(widget.pathsToPlay[1]);
+                      _selected = 1;
+                      player.play();
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: ElevatedButton(
+                child: Text("Cevapla"),
+
+                onPressed: (){
+                  if(_selected == null){
+                    print("NULL");
+                  }
+                  else if (_selected == widget.correct_answer_index){
+                    correct(context, widget.complete);
+                  }
+                  else{
+                    inCorrect(context, widget.complete);
+                  }
                 },
               ),
-
-              ElevatedButton(
-                child: Icon(Icons.speaker),
-                onPressed: () async{
-                  await player.setAsset(widget.pathsToPlay[1]);
-                  _selected = 1;
-                  player.play();
-                },
-              ),
-
-              ElevatedButton(
-                  child: Text("Cevapla"),
-
-              onPressed: (){
-                if(_selected == null){
-                  print("NULL");
-                }
-                else if (_selected == widget.correct_answer_index){
-                  success();
-                }
-                else{
-                  print("BAŞARISIZ");
-                }
-              },
-              )
-            ],
+            ),
           ),
         ],
       ),
     );
   }
+}
 
-  void nextPage(){
+// Go to next page
 
-  }
+void nextPage(){
+  LessonService _service = LessonService();
+  page_index.value++;
+  page_index.notifyListeners();
+  print(page_index.value);
+}
 
-  void success(){
-    print("BAŞARILI BAŞARILI BAŞARILI BAŞARILI BAŞARILI BAŞARILI BAŞARILI ");
-  }
+// Correct
+
+void correct(BuildContext context, complete){
+  final snackBar = SnackBar(
+    content: Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        Text('Doğru Cevap!', textAlign: TextAlign.center, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),),
+        SizedBox(height: 20,),
+        Text(complete, textAlign: TextAlign.center, style: TextStyle(fontSize: 14,),),
+        SizedBox(height: 10,),
+        ElevatedButton(
+          child: Text("DEVAM ET", style: TextStyle(fontWeight: FontWeight.w700),),
+          onPressed: (){
+            nextPage();
+          },
+        )
+      ],
+    ),
+    backgroundColor: Colors.teal,
+    behavior: SnackBarBehavior.fixed,
+  );
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+
+}
+
+// Not Correct
+
+void inCorrect(BuildContext context, complete){
+  final snackBar = SnackBar(
+    content: Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        Text('Hmm...', textAlign: TextAlign.center, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),),
+        SizedBox(height: 20,),
+        Text(complete, textAlign: TextAlign.center, style: TextStyle(fontSize: 14,),),
+        SizedBox(height: 10,),
+        ElevatedButton(
+          child: Text("BİR DAHA DENE", style: TextStyle(fontWeight: FontWeight.w700),),
+          onPressed: (){
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+          },
+        )
+      ],
+    ),
+    backgroundColor: Colors.redAccent,
+    behavior: SnackBarBehavior.fixed,
+  );
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }

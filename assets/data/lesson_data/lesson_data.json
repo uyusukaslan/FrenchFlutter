@@ -43,7 +43,8 @@
           "assets/audio/moo.mp3",
           "assets/audio/une_cuisiniere.mp4"
         ],
-        "correct_answer_index": 1
+        "correct_answer_index": 1,
+        "complete": "Ben bir aşçıyım."
       },
       {
         "type": "text",
@@ -56,8 +57,11 @@
     "status": "onProgress",
     "pages": [
       {
-        "type": "text",
-        "text": "assdaad"
+        "type": "complete_text",
+        "image": "assets/images/a.jpg",
+        "text": "Je suis...",
+        "answer": "une cuisinière",
+        "complete": "Ben bir aşçıyım."
       },
       {
         "type": "text",

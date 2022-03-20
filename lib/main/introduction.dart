@@ -1,29 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:french/main/home.dart';
-import 'package:french/main/lesson/lesson.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
-
-void main() {
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    title: "Deneme",
-    theme: ThemeData.dark().copyWith(
-      scaffoldBackgroundColor: Color.fromARGB(255, 0, 53, 102),
-      primaryColor: Colors.white,
-      backgroundColor: Colors.green,
-      textTheme: GoogleFonts.nunitoTextTheme(),
-    ),
-    /*theme: ThemeData(
-      primaryColor: Colors.white,
-      backgroundColor: Colors.green,
-      textTheme: GoogleFonts.nunitoTextTheme(),
-      scaffoldBackgroundColor: Colors.white,
-    ),*/
-    home: Welcome(),
-  ));
-}
 
 class Welcome extends StatefulWidget {
 
