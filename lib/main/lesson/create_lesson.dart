@@ -303,12 +303,13 @@ void correct(BuildContext context, complete){
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Text('Doğru Cevap!', textAlign: TextAlign.center, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),),
-        SizedBox(height: 20,),
-        Text(complete, textAlign: TextAlign.center, style: TextStyle(fontSize: 14,),),
         SizedBox(height: 10,),
+        Text(complete, textAlign: TextAlign.center, style: TextStyle(fontSize: 14,),),
+        SizedBox(height: 20,),
         ElevatedButton(
           child: Text("DEVAM ET", style: TextStyle(fontWeight: FontWeight.w700),),
           onPressed: (){
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
             nextPage();
           },
         )
@@ -331,9 +332,9 @@ void inCorrect(BuildContext context, complete){
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Text('Hmm...', textAlign: TextAlign.center, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),),
-        SizedBox(height: 20,),
-        Text(complete, textAlign: TextAlign.center, style: TextStyle(fontSize: 14,),),
         SizedBox(height: 10,),
+        Text(complete, textAlign: TextAlign.center, style: TextStyle(fontSize: 14,),),
+        SizedBox(height: 20,),
         ElevatedButton(
           child: Text("BİR DAHA DENE", style: TextStyle(fontWeight: FontWeight.w700),),
           onPressed: (){

@@ -74,12 +74,17 @@ class LessonState extends State<Lesson> {
 
           Expanded(
             child: Center(
-                child: LinearPercentIndicator(
-                  lineHeight: 9,
-                  percent: _service.page_index / data[_lesson_index]['pages'].length,
-                  backgroundColor: Color(0xff5e4d71),
-                  progressColor: Color(0xffff7548),
-                )
+                child: ValueListenableBuilder(
+                  valueListenable: page_index,
+                  builder: (context, value, widget){
+                    return LinearPercentIndicator(
+                      lineHeight: 9,
+                      percent: page_index.value / data[_lesson_index]['pages'].length,
+                      backgroundColor: Color(0xff5e4d71),
+                      progressColor: Color(0xffff7548),
+                    );
+                  }
+                ),
             ),
           )
         ],
@@ -135,16 +140,5 @@ class LessonState extends State<Lesson> {
       default:
         return Text("Bir hata oluştu. " + page.toString());
     }
-  }
-
-  static void nextPage(){
-    _service.incrementPageIndex();
-    page_index.value = _service.page_index;
-  }
-
-  void stateSet(int index){
-    setState(() {
-      _service.incrementPageIndex();
-    });
   }
 }
