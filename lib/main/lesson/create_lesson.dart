@@ -57,6 +57,96 @@ class _CreateWordState extends State<CreateWord> {
   }
 }
 
+// ------------------- TABLE ----------------------
+
+class CreateTable extends StatefulWidget {
+
+  var pathsToPlay = [];
+  List rows = [];
+
+
+  CreateTable(this.pathsToPlay, this.rows);
+
+  @override
+  _CreateTableState createState() => _CreateTableState();
+}
+
+class _CreateTableState extends State<CreateTable> {
+
+  String path = '';
+
+  late AudioPlayer player;
+  @override
+  void initState() {
+    super.initState();
+    player = AudioPlayer();
+  }
+  @override
+  void dispose() {
+    player.dispose();
+    super.dispose();
+  }
+
+  Widget createTable(rowList) {
+    List<TableRow> rows = [];
+    for (int i = 0; i < rowList.length; i++) {
+      rows.add(
+          TableRow(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Text(rowList[i][0], textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontSize: 14),),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Text(rowList[i][1], textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontSize: 14)),
+                ),
+              ]
+          )
+      );
+    }
+    return Table(
+        border: TableBorder.symmetric(inside: BorderSide(width: 1, color: Color(0xff7B678E),), outside: BorderSide(width: 1, color: Color(0xff7B678E))),
+
+        defaultColumnWidth: FixedColumnWidth(300),
+        children: rows,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text("Kelimelerin Üzerine Basarak Dinle", style: TextStyle(color: Colors.white, fontSize: 19, fontWeight: FontWeight.bold),),
+          //SizedBox(height: 10),
+
+          Expanded(
+            child: Align(
+              alignment: Alignment.center,
+                child: createTable(widget.rows)
+            )
+
+          ),
+          Expanded(
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: ElevatedButton(
+                child: Text("Devam Et"),
+
+                onPressed: (){
+                  nextPage();
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 //--------------------------- VIDEO ----------------------------
 
 class CreateVideo extends StatefulWidget {
@@ -183,7 +273,7 @@ class _CreateCompleteTextState extends State<CreateCompleteText> {
 }
 
 
-//----------------- AUDIO ----------------
+//----------------- AUDIO MATCH ----------------
 
 class CreateAudioMatch extends StatefulWidget {
 

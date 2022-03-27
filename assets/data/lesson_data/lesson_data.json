@@ -10,6 +10,21 @@
         "path": "assets/video/video_1.mp4"
       },
       {
+        "type": "table",
+        "rows": [
+          ["Salut", "a"],
+          ["Salut", "a"],
+          ["Salut", "a"],
+          ["Salut", "a"]
+        ],
+        "paths": [
+          "assets/audio/une_cuisiniere.mp4",
+          "assets/audio/une_cuisiniere.mp4",
+          "assets/audio/une_cuisiniere.mp4",
+          "assets/audio/une_cuisiniere.mp4"
+        ]
+      },
+      {
         "type": "word",
         "word": "une Cuisinière",
         "sentence": "Ma mère est une cuisinière.",

@@ -137,6 +137,8 @@ class LessonState extends State<Lesson> {
         return CreateAudioMatch(page['answers'], page['text'], page['correct_answer_index'], page['complete']);
       case "complete_text":
         return CreateCompleteText(page['text'], page['answer'], page['complete']);
+      case "table":
+        return CreateTable(page['paths'], page['rows']);
       default:
         return Text("Bir hata oluştu. " + page.toString());
     }
