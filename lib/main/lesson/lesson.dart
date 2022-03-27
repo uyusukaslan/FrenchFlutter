@@ -139,6 +139,9 @@ class LessonState extends State<Lesson> {
         return CreateCompleteText(page['text'], page['answer'], page['complete']);
       case "table":
         return CreateTable(page['paths'], page['rows']);
+      case "select_from_audio":
+        int index = page['correct_answer_index'];
+        return CreateAnswerFromAudio(page['path'], page['correct_answer_index'], page['answers'][0], page['answers']);
       default:
         return Text("Bir hata oluştu. " + page.toString());
     }

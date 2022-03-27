@@ -25,6 +25,17 @@
         ]
       },
       {
+        "type": "select_from_audio",
+        "path": "assets/audio/une_cuisiniere.mp4",
+        "answers": [
+          "une cuisinière",
+          "une chef",
+          "une boulangerie",
+          "une laptop"
+        ],
+        "correct_answer_index": 1
+      },
+      {
         "type": "word",
         "word": "une Cuisinière",
         "sentence": "Ma mère est une cuisinière.",

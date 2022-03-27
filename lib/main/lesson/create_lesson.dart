@@ -7,6 +7,8 @@ import 'package:video_player/video_player.dart';
 import 'lesson_service.dart';
 //import 'package:google_fonts/google_fonts.dart';
 
+// ----------------- WORD ----------------
+
 class CreateWord extends StatefulWidget {
 
   var pathToPlay = '';
@@ -61,11 +63,11 @@ class _CreateWordState extends State<CreateWord> {
 
 class CreateTable extends StatefulWidget {
 
-  var pathsToPlay = [];
+  var paths = [];
   List rows = [];
 
 
-  CreateTable(this.pathsToPlay, this.rows);
+  CreateTable(this.paths, this.rows);
 
   @override
   _CreateTableState createState() => _CreateTableState();
@@ -93,9 +95,15 @@ class _CreateTableState extends State<CreateTable> {
       rows.add(
           TableRow(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Text(rowList[i][0], textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontSize: 14),),
+                InkWell(
+                  onTap: () async{
+                    await player.setAsset(widget.paths[i]);
+                    player.play();
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Text(rowList[i][0], textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontSize: 14),),
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(12.0),
@@ -108,7 +116,10 @@ class _CreateTableState extends State<CreateTable> {
     return Table(
         border: TableBorder.symmetric(inside: BorderSide(width: 1, color: Color(0xff7B678E),), outside: BorderSide(width: 1, color: Color(0xff7B678E))),
 
-        defaultColumnWidth: FixedColumnWidth(300),
+        columnWidths: {
+          0: FractionColumnWidth(.5),
+          1: FractionColumnWidth(.5),
+        },
         children: rows,
     );
   }
@@ -272,6 +283,123 @@ class _CreateCompleteTextState extends State<CreateCompleteText> {
   }
 }
 
+// -------------- CHOOSE CORRECT FROM AUDIO -----------
+
+class CreateAnswerFromAudio extends StatefulWidget {
+
+  String path = '';
+  int correct_answer_index = 0;
+  var answers = [];
+  String complete = '';
+
+  CreateAnswerFromAudio(this.path, this.correct_answer_index, this.complete, this.answers);
+
+  @override
+  _CreateAnswerFromAudioState createState() => _CreateAnswerFromAudioState();
+}
+
+class _CreateAnswerFromAudioState extends State<CreateAnswerFromAudio> {
+
+
+  var _selected = null;
+
+  late AudioPlayer player;
+  @override
+  void initState() {
+    super.initState();
+    player = AudioPlayer();
+
+    player.setAsset(widget.path);
+    _selected = 0;
+    player.play();
+  }
+  @override
+  void dispose() {
+    player.dispose();
+    super.dispose();
+  }
+
+  void isCorrect(int index){
+    if(index != null){
+      if(widget.correct_answer_index == index){
+        correct(context, widget.answers[widget.correct_answer_index]);
+      }
+      else{
+        inCorrect(context, widget.answers[widget.correct_answer_index]);
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Align(
+        alignment: Alignment.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Text("Doğru Cevabı Bul", style: TextStyle(color: Colors.white, fontSize: 19, fontWeight: FontWeight.bold),),
+
+            Expanded(
+              child: Align(
+                alignment: Alignment.center,
+                child: CircleAvatar(
+                  radius: 60,
+                  backgroundColor: Color(0xffff7548),
+                  child: IconButton(
+                    iconSize: 60,
+                    icon: Icon(CupertinoIcons.speaker_2),
+                    onPressed: () async{
+                      await player.setAsset(widget.path);
+                      _selected = 0;
+                      player.play();
+                    },
+                  ),
+                ),
+              ),
+            ),
+
+            Expanded(
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        ElevatedButton(onPressed: () => _selected = 0, child: Text(widget.answers[0])),
+                        ElevatedButton(onPressed: () => _selected = 1, child: Text(widget.answers[1])),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        ElevatedButton(onPressed: () => _selected = 2, child: Text(widget.answers[2])),
+                        ElevatedButton(onPressed: () => _selected = 3, child: Text(widget.answers[3])),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Expanded(
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: ElevatedButton(
+                  child: Text("Cevapla"),
+
+                  onPressed: (){
+                    isCorrect(_selected);
+                  },
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
 //----------------- AUDIO MATCH ----------------
 
