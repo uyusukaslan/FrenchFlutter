@@ -49,7 +49,7 @@ class _StudyState extends State<Study> {
         : ListView.builder(
           itemCount: _data.length,
           itemBuilder: (BuildContext context, int index){
-            return createLessonCard(_data[index]['title'], _data[index]['status'], index);
+            return createLessonCard(_data[index]['title'], _data[index]['status'], index, _data[index]['image']);
       },
     );
   }
@@ -67,7 +67,7 @@ class _StudyState extends State<Study> {
 
   /* Create Lesson Card */
 
-  Widget createLessonCard(String name, String status, int index) {
+  Widget createLessonCard(String name, String status, int index, String path) {
 
     double progress = .4;
     bool _isCompleted = false;
@@ -139,7 +139,7 @@ class _StudyState extends State<Study> {
                                       child: Container(
                                         child: Padding(
                                           padding: EdgeInsets.all(13),
-                                          child: Image.asset('assets/images/food_icon.png'),
+                                          child: Image.asset(path),
                                         ),
                                       ),
                                     ),
@@ -154,7 +154,7 @@ class _StudyState extends State<Study> {
                                     height: 80,
                                     child: Padding(
                                       padding: EdgeInsets.all(13),
-                                      child: Image.asset('assets/images/food_icon.png'),
+                                      child: Image.asset(path),
                                     ),
                                   ),
                                 ),
@@ -167,7 +167,7 @@ class _StudyState extends State<Study> {
 
                         Flexible(
                           child: ListTile(
-                            title: Text("Ders " + (index+1).toString(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
+                            title: Text("Leçon " + (index+1).toString(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
                             subtitle: Text(name, style: TextStyle(fontSize: 14)),
                           ),
                         ),

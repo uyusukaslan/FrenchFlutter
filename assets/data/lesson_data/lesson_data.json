@@ -2,66 +2,100 @@
   {
     "title": "Selamlaşma",
     "status": "completed",
-    "image": "assets/images/a.jpg",
+    "image": "assets/images/waving-hand.png",
     "pages": [
       {
         "type": "video",
         "text": "123123123",
         "path": "assets/video/video_1.mp4"
       },
+
       {
         "type": "table",
         "rows": [
-          ["Salut", "a"],
-          ["Salut", "a"],
-          ["Salut", "a"],
-          ["Salut", "a"]
+          ["Bonjour", "Merhaba\nGünaydın"],
+          ["Salut", "Selam\nHoşça kal"],
+          ["Bonsoir", "İyi akşamlar"],
+          ["Bonne nuit", "İyi geceler"],
+          ["Ça va?", "N'aber?"],
+          ["Comment Ça va?", "Nasılsın?"],
+          ["Comment allez-vous?", "Nasılsınız?"],
+          ["Très bien, merci.", "Çok iyiyim, teşekkür ederim."],
+          ["Ça va bien, merci.", "İyiyim, teşekkür ederim."],
+          ["Ça va mal.", "Kötüyüm."],
+          ["Au revoir.", "Hoşça kal."]
         ],
         "paths": [
+          "assets/audio/une_cuisiniere.mp4",
+          "assets/audio/une_cuisiniere.mp4",
+          "assets/audio/une_cuisiniere.mp4",
+          "assets/audio/une_cuisiniere.mp4",
+          "assets/audio/une_cuisiniere.mp4",
+          "assets/audio/une_cuisiniere.mp4",
+          "assets/audio/une_cuisiniere.mp4",
           "assets/audio/une_cuisiniere.mp4",
           "assets/audio/une_cuisiniere.mp4",
           "assets/audio/une_cuisiniere.mp4",
           "assets/audio/une_cuisiniere.mp4"
         ]
       },
+
+      {
+        "type": "select_from_image",
+        "path": "assets/images/happy.png",
+        "answers": [
+          "Ça va bien.",
+          "Ça va mal."
+        ],
+        "correct_answer_index": 0
+      },
+
       {
         "type": "select_from_audio",
         "path": "assets/audio/une_cuisiniere.mp4",
         "answers": [
-          "une cuisinière",
-          "une chef",
-          "une boulangerie",
-          "une laptop"
-        ],
-        "correct_answer_index": 0
-      },
-      {
-        "type": "word",
-        "word": "une Cuisinière",
-        "sentence": "Ma mère est une cuisinière.",
-        "path": "assets/audio/une_cuisiniere.mp4"
-      },
-      {
-        "type": "audio_match",
-        "text": "une cuisinière",
-        "answers": [
-          "assets/audio/moo.mp3",
-          "assets/audio/une_cuisiniere.mp4"
+          "Commen alle vous?",
+          "Comment allez-vous?",
+          "Comman tallez vous?",
+          "Koman talle vous?"
         ],
         "correct_answer_index": 1
       },
+
       {
-        "type": "complete_text",
-        "image": "assets/images/a.jpg",
-        "text": "Je suis...",
-        "answer": "une cuisinière"
-      }
-    ]
-  },
-  {
-    "title": "Kendini Tanıtma",
-    "status": "completed",
-    "pages": [
+        "type": "select_from_audio",
+        "path": "assets/audio/une_cuisiniere.mp4",
+        "answers": [
+          "Bonjour!",
+          "Baunjour!",
+          "Bonjur!",
+          "Baunjur!"
+        ],
+        "correct_answer_index": 0
+      },
+
+      {
+        "type": "select_from_audio",
+        "path": "assets/audio/une_cuisiniere.mp4",
+        "answers": [
+          "Salut",
+          "Bonjour",
+          "Au Revoir",
+          "Ça va."
+        ],
+        "correct_answer_index": 0
+      },
+
+      {
+        "type": "select_from_image",
+        "path": "assets/images/sad.png",
+        "answers": [
+          "Je vais très bien.",
+          "Comme ci comme ça."
+        ],
+        "correct_answer_index": 0
+      },
+
       {
         "type": "audio_match",
         "text": "une cuisinière",
@@ -71,16 +105,41 @@
         ],
         "correct_answer_index": 1,
         "complete": "Ben bir aşçıyım."
+      }
+    ]
+  },
+  {
+    "title": "Kendini Tanıtma",
+    "status": "completed",
+    "image": "assets/images/food_icon.png",
+    "pages": [
+      {
+        "type": "dialogue_order",
+        "answers": [
+          "Bonjour madame Joly, ça va bien et vous?",
+          "Ça va merci. Au revoir monsieur.",
+          "Au revoir madame.",
+          "Bonjour monsieur Alexandre. Comment allez-vous?"
+        ],
+        "indexes": [1, 2, 3, 4],
+        "correct_answer_index": 1
       },
       {
-        "type": "text",
-        "text": "9897987"
+        "type": "audio_match",
+        "text": "une cuisinière",
+        "answers": [
+          "assets/audio/moo.mp3",
+          "assets/audio/une_cuisiniere.mp4"
+        ],
+        "correct_answer_index": 1,
+        "complete": "Ben bir aşçıyım."
       }
     ]
   },
   {
     "title": "Ülkeler",
     "status": "onProgress",
+    "image": "assets/images/food_icon.png",
     "pages": [
       {
         "type": "complete_text",
@@ -98,6 +157,7 @@
   {
     "title": "Lesson 4",
     "status": "locked",
+    "image": "assets/images/food_icon.png",
     "pages": [
       {
         "type": "text",
@@ -112,6 +172,7 @@
   {
     "title": "Lesson 5",
     "status": "locked",
+    "image": "assets/images/food_icon.png",
     "pages": [
       {
         "type": "text",
@@ -126,6 +187,7 @@
   {
     "title": "Lesson 6",
     "status": "locked",
+    "image": "assets/images/food_icon.png",
     "pages": [
       {
         "type": "text",

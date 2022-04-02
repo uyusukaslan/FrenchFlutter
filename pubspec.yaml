@@ -44,6 +44,7 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  flutter_reorderable_list: ^1.2.0
 
 dev_dependencies:
   flutter_test:
@@ -63,9 +64,9 @@ dev_dependencies:
 flutter:
 
   assets:
-    - assets/images/a.jpg
-    - assets/images/food_icon.png
+
     - assets/data/lesson_data/lesson_data.json
+    - assets/images/
     - assets/audio/
     - assets/video/
 

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:french/main/lesson/lesson.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:video_player/video_player.dart';
+import 'package:collection/collection.dart';
 
 import 'lesson_service.dart';
 //import 'package:google_fonts/google_fonts.dart';
@@ -113,14 +114,16 @@ class _CreateTableState extends State<CreateTable> {
           )
       );
     }
-    return Table(
-        border: TableBorder.symmetric(inside: BorderSide(width: 1, color: Color(0xff7B678E),), outside: BorderSide(width: 1, color: Color(0xff7B678E))),
-
-        columnWidths: {
-          0: FractionColumnWidth(.5),
-          1: FractionColumnWidth(.5),
-        },
-        children: rows,
+    return Center(
+      child: Table(
+          border: TableBorder.symmetric(inside: BorderSide(width: 1, color: Color(0xff7B678E),), outside: BorderSide(width: 1, color: Color(0xff7B678E))),
+          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+          columnWidths: {
+            0: FractionColumnWidth(.5),
+            1: FractionColumnWidth(.5),
+          },
+          children: rows,
+      ),
     );
   }
 
@@ -129,22 +132,29 @@ class _CreateTableState extends State<CreateTable> {
     return Expanded(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text("Kelimelerin Üzerine Basarak Dinle", style: TextStyle(color: Colors.white, fontSize: 19, fontWeight: FontWeight.bold),),
+          Text("Kelimelerin Üzerine Basarak Dinle ve Tekrar Et", style: TextStyle(color: Colors.white, fontSize: 19, fontWeight: FontWeight.bold),),
           //SizedBox(height: 10),
 
           Expanded(
             child: Align(
-              alignment: Alignment.center,
+              alignment: Alignment.topCenter,
                 child: createTable(widget.rows)
             )
 
           ),
-          Expanded(
-            child: Align(
-              alignment: Alignment.bottomCenter,
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width * 2/ 3,
+              height: MediaQuery.of(context).size.width / 8,
               child: ElevatedButton(
-                child: Text("Devam Et"),
+                child: Text("Devam Et", style: TextStyle(fontSize: 19, fontWeight: FontWeight.w600),),
+                style: ElevatedButton.styleFrom(
+                  shadowColor: Colors.transparent,
+                  primary: Color(0xffff7548),
+                ),
 
                 onPressed: (){
                   nextPage();
@@ -193,42 +203,46 @@ class _CreateVideoState extends State<CreateVideo> {
   Widget build(BuildContext context) {
 
     return Expanded(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
+        child: Align(
+          alignment: Alignment.center,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text("Videoyu izle", style: TextStyle(color: Colors.white, fontSize: 19, fontWeight: FontWeight.bold),),
 
-            Expanded(
-              child: Align(
-                alignment: Alignment.center,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text("Videoyu İzle", style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w600),),
-
-                    SizedBox(height: 20,),
-
-                    AspectRatio(
-                      aspectRatio: _controller.value.aspectRatio,
-                      child: InkWell(onTap: (){
-                        _controller.value.isPlaying ? _controller.pause() : _controller.play();
-                      }
-                      ,child: Flexible(child: VideoPlayer(_controller))),
-                    ),
-                  ],
+              Expanded(
+                child: Align(
+                  alignment: Alignment.center,
+                  child: AspectRatio(
+                    aspectRatio: _controller.value.aspectRatio,
+                    child: InkWell(onTap: (){
+                      _controller.value.isPlaying ? _controller.pause() : _controller.play();
+                    }
+                    ,child: Flexible(child: VideoPlayer(_controller))),
+                  ),
                 ),
               ),
-            ),
-            Expanded(
-              child: Align(
+              Align(
                 alignment: Alignment.bottomCenter,
-                child: ElevatedButton(onPressed: (){
-                  nextPage();
-                }, child: Text("İleri")
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width * 2/ 3,
+                  height: MediaQuery.of(context).size.width / 8,
+                  child: ElevatedButton(
+                    child: Text("Devam Et", style: TextStyle(fontSize: 19, fontWeight: FontWeight.w600),),
+                    style: ElevatedButton.styleFrom(
+                      shadowColor: Colors.transparent,
+                      primary: Color(0xffff7548),
+                    ),
+
+                    onPressed: (){
+                      nextPage();
+                    },
+                  ),
                 ),
               ),
-            )],
+            ],
+          ),
         )
     );
   }
@@ -288,7 +302,7 @@ class _CreateCompleteTextState extends State<CreateCompleteText> {
 class CreateAnswerFromAudio extends StatefulWidget {
 
   String path = '';
-  int correct_answer_index = 0;
+  int correct_answer_index;
   var answers = [];
   String complete = '';
 
@@ -310,7 +324,6 @@ class _CreateAnswerFromAudioState extends State<CreateAnswerFromAudio> {
     player = AudioPlayer();
 
     player.setAsset(widget.path);
-    _selected = 0;
     player.play();
   }
   @override
@@ -320,14 +333,18 @@ class _CreateAnswerFromAudioState extends State<CreateAnswerFromAudio> {
   }
 
   void isCorrect(int index){
-    if(index != null){
+
       if(widget.correct_answer_index == index){
         correct(context, widget.answers[widget.correct_answer_index]);
+        player.setAsset('assets/audio/correct.mp3');
+        player.play();
       }
       else{
         inCorrect(context, widget.answers[widget.correct_answer_index]);
+        player.setAsset('assets/audio/wrong.mp3');
+        player.play();
       }
-    }
+
   }
 
   @override
@@ -338,16 +355,16 @@ class _CreateAnswerFromAudioState extends State<CreateAnswerFromAudio> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Text("Doğru Cevabı Bul", style: TextStyle(color: Colors.white, fontSize: 19, fontWeight: FontWeight.bold),),
+            Text("Dinle, doğru Cevabı Bul", style: TextStyle(color: Colors.white, fontSize: 19, fontWeight: FontWeight.bold),),
 
             Expanded(
               child: Align(
                 alignment: Alignment.center,
                 child: CircleAvatar(
-                  radius: 60,
+                  radius: 70,
                   backgroundColor: Color(0xffff7548),
                   child: IconButton(
-                    iconSize: 60,
+                    iconSize: 70,
                     icon: Icon(CupertinoIcons.speaker_2),
                     onPressed: () async{
                       await player.setAsset(widget.path);
@@ -359,38 +376,304 @@ class _CreateAnswerFromAudioState extends State<CreateAnswerFromAudio> {
               ),
             ),
 
-            Expanded(
-              child: Align(
-                alignment: Alignment.bottomCenter,
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
                 child: Column(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        ElevatedButton(onPressed: () => _selected = 0, child: Text(widget.answers[0])),
-                        ElevatedButton(onPressed: () => _selected = 1, child: Text(widget.answers[1])),
-                      ],
+                    SizedBox(
+                      child: ElevatedButton(onPressed: () => isCorrect(0), child: Text(widget.answers[0], style: TextStyle(fontSize: 18)), style: ElevatedButton.styleFrom(
+                        shadowColor: Colors.transparent,
+                        primary: Color(0xff76519C),
+                      ),),
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.width / 5,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        ElevatedButton(onPressed: () => _selected = 2, child: Text(widget.answers[2])),
-                        ElevatedButton(onPressed: () => _selected = 3, child: Text(widget.answers[3])),
-                      ],
+
+                    SizedBox(height: 5,),
+
+                    SizedBox(
+                      child: ElevatedButton(onPressed: () => isCorrect(1), child: Text(widget.answers[1], style: TextStyle(fontSize: 18)), style: ElevatedButton.styleFrom(
+                        shadowColor: Colors.transparent,
+                        primary: Color(0xff76519C),
+                      ),),
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.width / 5,
+                    ),
+
+                    SizedBox(height: 5,),
+
+                    SizedBox(
+                      child: ElevatedButton(onPressed: () => isCorrect(2), child: Text(widget.answers[2], style: TextStyle(fontSize: 18)), style: ElevatedButton.styleFrom(
+                        shadowColor: Colors.transparent,
+                        primary: Color(0xff76519C),
+                      ),),
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.width / 5,
+                    ),
+
+                    SizedBox(height: 5,),
+
+                    SizedBox(
+                      child: ElevatedButton(onPressed: () => isCorrect(3), child: Text(widget.answers[3], style: TextStyle(fontSize: 18)), style: ElevatedButton.styleFrom(
+                        shadowColor: Colors.transparent,
+                        primary: Color(0xff76519C),
+                      ),),
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.width / 5,
                     ),
                   ],
                 ),
               ),
             ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+//--------------- DIALOGUE ORDER ----------------
+
+class CreateDialogueOrder extends StatefulWidget {
+
+  List<dynamic> text = [];
+
+  List<String> complete = [];
+  List<int> indexes = [1,2,3,4];
+
+  CreateDialogueOrder(this.text);
+
+  @override
+  _CreateDialogueOrderState createState() => _CreateDialogueOrderState();
+}
+
+class _CreateDialogueOrderState extends State<CreateDialogueOrder> {
+
+  bool areListsEqual(var list1, var list2) {
+    // check if both are lists
+    if(!(list1 is List && list2 is List)
+        // check if both have same length
+        || list1.length!=list2.length) {
+      return false;
+    }
+
+    // check if elements are equal
+    for(int i=0;i<list1.length;i++) {
+      if(list1[i]!=list2[i]) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  late AudioPlayer player;
+  @override
+  void initState() {
+    super.initState();
+    player = AudioPlayer();
+    createText();
+  }
+  @override
+  void dispose() {
+    player.dispose();
+    super.dispose();
+  }
+
+  void isCorrect(int index){
+    if(areListsEqual(widget.text, widget.complete)){
+      correct(context, "");
+      player.setAsset('assets/audio/correct.mp3');
+      player.play();
+    }
+    else{
+      print(widget.complete);
+      inCorrect(context, "");
+      player.setAsset('assets/audio/wrong.mp3');
+      player.play();
+    }
+  }
+
+  createText(){
+    for(int i=0; i < widget.text.length; i++){
+      widget.complete.add(widget.text[widget.indexes[i]-1]);
+      print("\nRESULT\n");
+      print(widget.text);
+      print(widget.complete);
+    }
+  }
+
+  void reorderData(int oldindex, int newindex){
+    setState(() {
+      if(newindex>oldindex){
+        newindex-=1;
+      }
+      final items =widget.text.removeAt(oldindex);
+      widget.text.insert(newindex, items);
+    });
+    print(widget.text);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
+    return Column(
+      children: [
+        ReorderableListView.builder(
+          shrinkWrap: true,
+        scrollDirection: Axis.vertical,
+          itemBuilder: (BuildContext context, int index){
+            return Card(
+              color: Colors.blueGrey,
+              key: ValueKey(index),
+              elevation: 2,
+              child: ListTile(
+                  title: Text(widget.text[index])
+              ),
+            );
+          },
+          itemCount: widget.text.length,
+          onReorder: reorderData,
+        ),
+
+        /*return ReorderableListView(
+          buildDefaultDragHandles: false,
+            children: <Widget>[
+              for(final items in widget.text)
+                Card(
+                  color: Colors.blueGrey,
+                  key: ValueKey(items),
+                  elevation: 2,
+                  child: ListTile(
+                    title: Text(items),
+                    leading: Icon(Icons.work,color: Colors.black,),
+                  ),
+                ),
+            ],
+            onReorder: reorderData,
+
+          );*/
+
+        ElevatedButton(onPressed: () => isCorrect(1), child: Text("CEVAPLA", style: TextStyle(fontSize: 18)), style: ElevatedButton.styleFrom(
+          shadowColor: Colors.transparent,
+          primary: Color(0xff76519C),
+        ),),
+      ],
+    );
+
+
+
+  }
+}
+
+//-------------- FIND ANSWER FROM IMAGE ----------------
+
+class CreateAnswerFromImage extends StatefulWidget {
+
+
+  int correct_answer_index;
+  var answers = [];
+  String complete = '';
+  var img;
+
+  CreateAnswerFromImage(this.correct_answer_index, this.answers, this.img);
+
+  @override
+  _CreateAnswerFromImageState createState() => _CreateAnswerFromImageState();
+}
+
+class _CreateAnswerFromImageState extends State<CreateAnswerFromImage> {
+
+  var _selected = null;
+
+  late AudioPlayer player;
+  @override
+  void initState() {
+    super.initState();
+    player = AudioPlayer();
+  }
+  @override
+  void dispose() {
+    player.dispose();
+    super.dispose();
+  }
+  
+
+
+  void isCorrect(int index){
+    if(widget.correct_answer_index == index){
+      correct(context, widget.answers[widget.correct_answer_index]);
+      player.setAsset('assets/audio/correct.mp3');
+      player.play();
+    }
+    else{
+      inCorrect(context, widget.answers[widget.correct_answer_index]);
+      player.setAsset('assets/audio/wrong.mp3');
+      player.play();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Align(
+        alignment: Alignment.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text("Resim ile Cevabı Eşleştir", style: TextStyle(color: Colors.white, fontSize: 19, fontWeight: FontWeight.bold),),
+
             Expanded(
               child: Align(
                 alignment: Alignment.bottomCenter,
-                child: ElevatedButton(
-                  child: Text("Cevapla"),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Align(
+                        child: Image.asset(
+                          widget.img,
+                          fit: BoxFit.contain,
+                          height: MediaQuery.of(context).size.width * 2 / 3 > 300 ? 300 : MediaQuery.of(context).size.width * 2 / 3,
+                          width: MediaQuery.of(context).size.width * 2 / 3 > 300 ? 300 : MediaQuery.of(context).size.width * 2 / 3,
+                        ),
+                        alignment: Alignment.bottomCenter,
+                      ),
+                    ),
 
-                  onPressed: (){
-                    isCorrect(_selected);
-                  },
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                                child: ElevatedButton(onPressed: () => isCorrect(0), child: Text(widget.answers[0], style: TextStyle(fontSize: 18)), style: ElevatedButton.styleFrom(
+                                  shadowColor: Colors.transparent,
+                                  primary: Color(0xff76519C),
+                                ),),
+                              width: MediaQuery.of(context).size.width,
+                              height: MediaQuery.of(context).size.width / 3.5,
+                            ),
+
+                            SizedBox(height: 5,),
+
+                            SizedBox(
+                              child: ElevatedButton(onPressed: () => isCorrect(1), child: Text(widget.answers[1], style: TextStyle(fontSize: 18)), style: ElevatedButton.styleFrom(
+                                shadowColor: Colors.transparent,
+                                primary: Color(0xff76519C),
+                              ),),
+                              width: MediaQuery.of(context).size.width,
+                              height: MediaQuery.of(context).size.width / 3.5,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -431,6 +714,19 @@ class _CreateAudioMatchState extends State<CreateAudioMatch> {
   void dispose() {
     player.dispose();
     super.dispose();
+  }
+
+  void isCorrect(int index){
+    if(widget.correct_answer_index == index){
+      correct(context, widget.complete);
+      player.setAsset('assets/audio/correct.mp3');
+      player.play();
+    }
+    else{
+      inCorrect(context, widget.complete);
+      player.setAsset('assets/audio/wrong.mp3');
+      player.play();
+    }
   }
 
   @override
@@ -484,15 +780,7 @@ class _CreateAudioMatchState extends State<CreateAudioMatch> {
                 child: Text("Cevapla"),
 
                 onPressed: (){
-                  if(_selected == null){
-                    print("NULL");
-                  }
-                  else if (_selected == widget.correct_answer_index){
-                    correct(context, widget.complete);
-                  }
-                  else{
-                    inCorrect(context, widget.complete);
-                  }
+                  isCorrect(_selected);
                 },
               ),
             ),
@@ -514,13 +802,14 @@ void nextPage(){
 
 // Correct
 
-void correct(BuildContext context, complete){
+void correct(BuildContext context, String complete){
+  
   final snackBar = SnackBar(
     content: Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        Text('Doğru Cevap!', textAlign: TextAlign.center, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),),
+        Text('Excellent!', textAlign: TextAlign.center, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),),
         SizedBox(height: 10,),
         Text(complete, textAlign: TextAlign.center, style: TextStyle(fontSize: 14,),),
         SizedBox(height: 20,),

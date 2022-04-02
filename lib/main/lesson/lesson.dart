@@ -90,17 +90,6 @@ class LessonState extends State<Lesson> {
         ],
       ),
       centerTitle: true,
-      actions: <Widget>[
-        Row(
-          children: <Widget>[
-            IconButton(
-              icon: Icon(CupertinoIcons.lightbulb),
-              color: Color(0xffffffff),
-              onPressed: () {},
-            ),
-          ],
-        )
-      ],
     );
   }
 
@@ -122,28 +111,38 @@ class LessonState extends State<Lesson> {
     );
   }
 
-  Widget setLesson(){
-    var page = data[_lesson_index]['pages'][page_index.value] ?? data[_lesson_index]['pages'][0];
+  setLesson(){
+    var page = page_index.value >= data[_lesson_index]['pages'].length ? null : (data[_lesson_index]['pages'][page_index.value] ?? data[_lesson_index]['pages'][0]);
 
-    //switch("video"){
-    switch(data.isNotEmpty ? page['type'] : null){
-      case "text":
-        return Text("Text");
-      case "video":
-        return CreateVideo(page['path']);
-      case "word":
-        return CreateWord(page['path'], page['word'], page['sentence']);
-      case "audio_match":
-        return CreateAudioMatch(page['answers'], page['text'], page['correct_answer_index'], page['complete']);
-      case "complete_text":
-        return CreateCompleteText(page['text'], page['answer'], page['complete']);
-      case "table":
-        return CreateTable(page['paths'], page['rows']);
-      case "select_from_audio":
-        int index = page['correct_answer_index'];
-        return CreateAnswerFromAudio(page['path'], page['correct_answer_index'], page['answers'][0], page['answers']);
-      default:
-        return Text("Bir hata oluştu. " + page.toString());
+    if (page_index.value > data[_lesson_index]['pages'].length - 1){
+        data[0]['title'] = "completed";
+        jsonEncode(data);
+        Navigator.pop(context);
+    }
+    else{
+      switch(data.isNotEmpty ? page['type'] : null){
+        case "text":
+          return Text("Text");
+        case "video":
+          return CreateVideo(page['path']);
+        case "word":
+          return CreateWord(page['path'], page['word'], page['sentence']);
+        case "audio_match":
+          return CreateAudioMatch(page['answers'], page['text'], page['correct_answer_index'], page['complete']);
+        case "complete_text":
+          return CreateCompleteText(page['text'], page['answer'], page['complete']);
+        case "table":
+          return CreateTable(page['paths'], page['rows']);
+        case "select_from_audio":
+          int index = page['correct_answer_index'];
+          return CreateAnswerFromAudio(page['path'], page['correct_answer_index'], page['answers'][0], page['answers']);
+        case "dialogue_order":
+          return CreateDialogueOrder(page['answers']);
+        case "select_from_image":
+          return CreateAnswerFromImage(page['correct_answer_index'], page['answers'], page['path']);
+        default:
+          return Text("Bir hata oluştu. " + page.toString());
+      }
     }
   }
 }
