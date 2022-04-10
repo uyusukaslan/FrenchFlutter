@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:french/main/lesson/finish_lesson.dart';
 import 'package:french/main/lesson/lesson_service.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
@@ -78,6 +80,9 @@ class LessonState extends State<Lesson> {
                   valueListenable: page_index,
                   builder: (context, value, widget){
                     return LinearPercentIndicator(
+                      animation: true,
+                      animateFromLastPercent: true,
+                      animationDuration: 300,
                       lineHeight: 9,
                       percent: page_index.value / data[_lesson_index]['pages'].length,
                       backgroundColor: Color(0xff5e4d71),
@@ -102,7 +107,7 @@ class LessonState extends State<Lesson> {
         return Container(
           height: 900,
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.only(left: 15.0, right: 15.0, bottom: 20),
             child: setLesson(),
           ),
 
@@ -112,14 +117,33 @@ class LessonState extends State<Lesson> {
   }
 
   setLesson(){
-    var page = page_index.value >= data[_lesson_index]['pages'].length ? null : (data[_lesson_index]['pages'][page_index.value] ?? data[_lesson_index]['pages'][0]);
+    isBtnDownClass().isBtnDown = false;
 
+    var page = page_index.value >= data[_lesson_index]['pages'].length ? null : (data[_lesson_index]['pages'][page_index.value] ?? data[_lesson_index]['pages'][0]);
+    
     if (page_index.value > data[_lesson_index]['pages'].length - 1){
-        data[0]['title'] = "completed";
-        jsonEncode(data);
-        Navigator.pop(context);
+
+      ScaffoldMessenger.of(context).clearSnackBars();
+
+        data[5]['title'] = "completed";
+
+        File('assets/data/lesson_data/lesson_data.json').writeAsString(jsonEncode(data));
+
+        print("VERİ" + data[5]['title']);
+
+
+        Future.delayed(Duration(milliseconds: 10), (){
+          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) =>
+              FinishLesson(
+                data[_lesson_index]['title'],
+                data[_lesson_index]['image'],
+              )));
+        });
+
+
     }
     else{
+      ScaffoldMessenger.of(context).clearSnackBars();
       switch(data.isNotEmpty ? page['type'] : null){
         case "text":
           return Text("Text");
@@ -137,9 +161,13 @@ class LessonState extends State<Lesson> {
           int index = page['correct_answer_index'];
           return CreateAnswerFromAudio(page['path'], page['correct_answer_index'], page['answers'][0], page['answers']);
         case "dialogue_order":
-          return CreateDialogueOrder(page['answers']);
+          return CreateDialogueOrder(page['answers'], page['path']);
         case "select_from_image":
-          return CreateAnswerFromImage(page['correct_answer_index'], page['answers'], page['path']);
+          return CreateAnswerFromImage(page['correct_answer_index'], page['answers'], page['img'],page['path']);
+        case "select_from_text":
+          return CreateAnswerFromText(page['correct_answer_index'], page['answers'], page['text'], page['path']);
+        case "drag":
+          return CreateDrag(page['answers']);
         default:
           return Text("Bir hata oluştu. " + page.toString());
       }

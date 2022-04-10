@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:french/main/lesson/create_lesson.dart';
 import 'package:square_percent_indicater/square_percent_indicater.dart';
 
 import 'lesson/lesson.dart';
@@ -28,15 +29,23 @@ class _StudyState extends State<Study> {
       _data = jsonDecode(jsonResult);
     });
   }
+  var jsonData;
+  @override
+  void didUpdateWidget(covariant Study oldWidget) {
+    // TODO: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
+    jsonData = readJson();
+  }
 
   /* Init State */
+
+
 
   @override
   void initState(){
     super.initState();
 
-    WidgetsBinding.instance!
-        .addPostFrameCallback((_) => readJson());
+   jsonData = readJson();
   }
 
 
@@ -44,6 +53,42 @@ class _StudyState extends State<Study> {
   /* Build Body */
 
   Widget buildBody(BuildContext context){
+
+    return FutureBuilder(
+      builder: (context, snapshot) {
+
+        if (snapshot.connectionState == ConnectionState.done){
+          return ListView.builder(
+            itemCount: _data.length,
+            itemBuilder: (BuildContext context, int index){
+              return createLessonCard(_data[index]['title'], _data[index]['status'], index, _data[index]['image']);
+            },
+          );
+        }
+
+        else if(snapshot.hasError){
+          return Text(snapshot.error.toString());
+        }
+
+        else{
+          print(snapshot.toString());
+          return const SizedBox(
+            child: CircularProgressIndicator(),
+            width: 60,
+            height: 60,
+          );
+        }
+
+      },
+
+      future: jsonData,
+
+      );
+
+
+
+    /*
+
     return _data.isEmpty
         ? CircularProgressIndicator()
         : ListView.builder(
@@ -51,10 +96,11 @@ class _StudyState extends State<Study> {
           itemBuilder: (BuildContext context, int index){
             return createLessonCard(_data[index]['title'], _data[index]['status'], index, _data[index]['image']);
       },
-    );
+    );*/
   }
 
   void changePage(int index, bool isCompleted, isInProgress) {
+
 
     isCompleted || isInProgress
 
@@ -73,15 +119,27 @@ class _StudyState extends State<Study> {
     bool _isCompleted = false;
     bool _isInProgress = false;
 
-    if(status == 'completed'){
-      _isCompleted = true;
+    switch (status){
+      case 'completed':
+        _isCompleted = true;
+        break;
+      case 'locked':
+        _isCompleted = false;
+        break;
+      case 'onProgress':
+        _isInProgress = true;
+        break;
     }
-    else if (status == 'locked'){
-      _isCompleted = false;
-    }
-    else{
-      _isInProgress = true;
-    }
+
+    // if(status == 'completed'){
+    //   _isCompleted = true;
+    // }
+    // else if (status == 'locked'){
+    //   _isCompleted = false;
+    // }
+    // else{
+    //   _isInProgress = true;
+    // }
 
     return InkWell(
       hoverColor: Colors.transparent,

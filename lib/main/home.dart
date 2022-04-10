@@ -66,11 +66,11 @@ class HomeState extends State {
       ),
       popAllScreensOnTapOfSelectedTab: false,
       popActionScreens: PopActionScreensType.all,
-      itemAnimationProperties: ItemAnimationProperties( // Navigation Bar's items animation properties.
+      itemAnimationProperties: const ItemAnimationProperties( // Navigation Bar's items animation properties.
         duration: Duration(milliseconds: 200),
         curve: Curves.ease,
       ),
-      screenTransitionAnimation: ScreenTransitionAnimation( // Screen transition animation on change of selected tab.
+      screenTransitionAnimation: const ScreenTransitionAnimation( // Screen transition animation on change of selected tab.
         animateTabTransition: true,
         curve: Curves.ease,
         duration: Duration(milliseconds: 200),
