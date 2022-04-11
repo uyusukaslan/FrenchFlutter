@@ -104,7 +104,7 @@
           "Tu t'appele Jolie",
           "Elle s'appele Jolie."
         ],
-        "correct_answer_index": 0
+        "correct_answer_index": 1
       },
 
       {
@@ -183,8 +183,7 @@
           "Je m'appele Jolie",
           "Bonjour, comment ça va?"
         ],
-        "indexes": [2, 3, 4, 1],
-        "correct_answer_index": 1
+        "indexes": [2, 3, 4, 1]
       }
     ]
   },
@@ -198,6 +197,30 @@
     "status": "completed",
     "image": "assets/images/introduce.png",
     "pages": [
+      {
+        "type": "table",
+        "rows": [
+          ["Comment tu t'appeles?\n - Je m'appele Bernard.", "Adın nedir?\n- Adım Bernard."],
+          ["Quel est ton prénom?\n - Mon prénom est Coraline.", "İsmin nedir?\n - Adım Coraline."],
+          ["Comment vous appelez-vous?\n - Je m'appele Alexandre.", "Adınız nedir?\n - Adım Alexandre."],
+          ["Quel est votre prénom?\n - Mon prénom, c'est Joly.", "İsminiz nedir?\n - İsmim Joly."]
+        ],
+        "paths": [
+          "assets/audio/comment_tu_tappeles_je_mappele_bernard.mp3",
+          "assets/audio/quel_est_ton_prenom_mon_prenom_est_caroline.mp3",
+          "assets/audio/comment_vous_appelez_vous_je_mappele_alexandre.mp3",
+          "assets/audio/bonne_nuit.mp3"
+        ]
+      },
+
+      {
+        "type": "drag",
+        "answers": [
+          ["Quel est ton prénom?", "Mon prénom, est Coraline."],
+          ["Comment tu t'appelles?", "Je m'appelle Bernard."]
+        ]
+      },
+
       {
         "type": "select_from_text",
         "path": "assets/audio/je_mappele_bernard.mp3",
@@ -250,8 +273,7 @@
         "answers": [
           ["papa", "baba"],
           ["mama", "anne"]
-        ],
-        "correct_answer_index": 1
+        ]
       },
       {
         "type": "dialogue_order",

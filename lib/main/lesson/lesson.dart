@@ -161,13 +161,13 @@ class LessonState extends State<Lesson> {
           int index = page['correct_answer_index'];
           return CreateAnswerFromAudio(page['path'], page['correct_answer_index'], page['answers'][0], page['answers']);
         case "dialogue_order":
-          return CreateDialogueOrder(page['answers'], page['path']);
+          return CreateDialogueOrder(page['answers'], page['path'], page['indexes']);
         case "select_from_image":
           return CreateAnswerFromImage(page['correct_answer_index'], page['answers'], page['img'],page['path']);
         case "select_from_text":
           return CreateAnswerFromText(page['correct_answer_index'], page['answers'], page['text'], page['path']);
         case "drag":
-          return CreateDrag(page['answers']);
+          return CreateDragText(page['answers']);
         default:
           return Text("Bir hata oluştu. " + page.toString());
       }

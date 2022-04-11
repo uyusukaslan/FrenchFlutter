@@ -487,7 +487,7 @@ class CreateDialogueOrder extends StatefulWidget {
   List<String> complete = [];
   List<int> indexes = [1, 2, 3, 4];
 
-  CreateDialogueOrder(this.text, this.path);
+  CreateDialogueOrder(this.text, this.path, this.indexes);
 
   @override
   _CreateDialogueOrderState createState() => _CreateDialogueOrderState();
@@ -1045,22 +1045,21 @@ class _CreateAudioMatchState extends State<CreateAudioMatch> {
 
 // -----------Drag and Drop -------------
 
-class CreateDrag extends StatefulWidget {
+class CreateDragText extends StatefulWidget {
 
   int correct_total = 0;
 
   var correct_answer_index;
-  String complete = '';
 
   List<dynamic> answers;
 
-  CreateDrag(this.answers);
+  CreateDragText(this.answers);
 
   @override
-  _CreateDragState createState() => _CreateDragState();
+  _CreateDragTextState createState() => _CreateDragTextState();
 }
 
-class _CreateDragState extends State<CreateDrag> {
+class _CreateDragTextState extends State<CreateDragText> {
   var answerList;
   String path = '';
   var _selected;
@@ -1080,20 +1079,6 @@ class _CreateDragState extends State<CreateDrag> {
   void dispose() {
     player.dispose();
     super.dispose();
-  }
-
-  void isCorrect(int index) {
-    if (!isBtnDownClass().isBtnDown) {
-      if (widget.correct_answer_index == index) {
-        correct(context, widget.complete, widget.answers[widget.correct_answer_index]);
-        player.setAsset('assets/audio/correct.mp3');
-        player.play();
-      } else {
-        inCorrect(context, widget.complete);
-        player.setAsset('assets/audio/wrong.mp3');
-        player.play();
-      }
-    }
   }
 
   @override
@@ -1117,12 +1102,15 @@ class _CreateDragState extends State<CreateDrag> {
                   shrinkWrap: true,
                   itemCount: widget.answers.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: ListTile(
 
-                        leading: Draggable(
-                          childWhenDragging: Text(""),
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Draggable(
+                          childWhenDragging: SizedBox(
+                            width: MediaQuery.of(context).size.width / 3,
+                            height: MediaQuery.of(context).size.width / 6,
+                          ),
 
                           data: answerList[index][0],
 
@@ -1134,13 +1122,13 @@ class _CreateDragState extends State<CreateDrag> {
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Center(
-                                    child: Text(answerList[index][0], textAlign: TextAlign.center,
-                                      style: const TextStyle(
-                                        color: Color(0xffefefef),
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 16,
-                                      ),
+                                  child: Text(answerList[index][0], textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                      color: Color(0xffefefef),
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 16,
                                     ),
+                                  ),
                                 ),
                               ),
                             ),
@@ -1163,12 +1151,13 @@ class _CreateDragState extends State<CreateDrag> {
                             ),
                           ),
                         ),
-                        trailing: DragTarget<String>(
+
+                        DragTarget<String>(
                           builder: (
-                            BuildContext context,
+                              BuildContext context,
                               List<dynamic> accepted,
                               List<dynamic> rejected,
-                          ){
+                              ){
                             return SizedBox(
                               width: MediaQuery.of(context).size.width / 3,
                               height: MediaQuery.of(context).size.width / 6,
@@ -1177,13 +1166,13 @@ class _CreateDragState extends State<CreateDrag> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Center(
-                                      child: Text(answerList[index][1], textAlign: TextAlign.center,
-                                        style: const TextStyle(
-                                          color: Color(0xffefefef),
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 16,
-                                        ),
+                                    child: Text(answerList[index][1], textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                        color: Color(0xffefefef),
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 16,
                                       ),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -1203,7 +1192,7 @@ class _CreateDragState extends State<CreateDrag> {
                             }
                           },
                         ),
-                      ),
+                      ],
                     );
                   }),
             ),
