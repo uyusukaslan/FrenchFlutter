@@ -46,6 +46,8 @@ class _StudyState extends State<Study> {
     super.initState();
 
    jsonData = readJson();
+
+   print("JSON RESULT ${jsonResult}");
   }
 
 
@@ -115,7 +117,7 @@ class _StudyState extends State<Study> {
 
   Widget createLessonCard(String name, String status, int index, String path) {
 
-    double progress = .4;
+    double progress = 0;
     bool _isCompleted = false;
     bool _isInProgress = false;
 

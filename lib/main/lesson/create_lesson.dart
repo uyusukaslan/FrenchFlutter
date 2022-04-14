@@ -1,12 +1,10 @@
-import 'dart:math';
-
+import 'package:show_up_animation/show_up_animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:french/main/lesson/lesson.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:video_player/video_player.dart';
-import 'package:collection/collection.dart';
 
 import 'lesson_service.dart';
 
@@ -21,58 +19,127 @@ buildTitle(String text){
 
 // ----------------- WORD ----------------
 
-class CreateWord extends StatefulWidget {
-  var pathToPlay = '';
-  String word = '';
-  String sentence = '';
-  CreateWord(this.pathToPlay, this.word, this.sentence);
+// class CreateWord extends StatefulWidget {
+//   var pathToPlay = '';
+//   String word = '';
+//   String sentence = '';
+//   CreateWord(this.pathToPlay, this.word, this.sentence);
+//
+//   @override
+//   _CreateWordState createState() => _CreateWordState();
+// }
+//
+// class _CreateWordState extends State<CreateWord> {
+//   late AudioPlayer player;
+//   @override
+//   void initState() {
+//     super.initState();
+//     player = AudioPlayer();
+//
+//     isBtnDownClass().isBtnDown = false;
+//   }
+//
+//   @override
+//   void dispose() {
+//     player.dispose();
+//     super.dispose();
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Center(
+//       child: Column(
+//         children: [
+//           Row(
+//             children: [
+//               ElevatedButton(
+//                 child: const Text(
+//                   "Play Sound",
+//                   style: TextStyle(color: Colors.white, fontSize: 13),
+//                 ),
+//                 onPressed: () async {
+//                   await player.setAsset(widget.pathToPlay);
+//                   player.play();
+//                 },
+//               ),
+//               Text(widget.word),
+//               Text(widget.sentence)
+//             ],
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
+// ---------- TEXT -------------
+
+class CreateText extends StatefulWidget {
+
+  String text;
+
+  CreateText(this.text);
 
   @override
-  _CreateWordState createState() => _CreateWordState();
+  _CreateTextState createState() => _CreateTextState();
 }
 
-class _CreateWordState extends State<CreateWord> {
-  late AudioPlayer player;
-  @override
-  void initState() {
-    super.initState();
-    player = AudioPlayer();
-
-    isBtnDownClass().isBtnDown = false;
-  }
-
-  @override
-  void dispose() {
-    player.dispose();
-    super.dispose();
-  }
-
+class _CreateTextState extends State<CreateText> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        children: [
-          Row(
-            children: [
-              ElevatedButton(
-                child: const Text(
-                  "Play Sound",
-                  style: TextStyle(color: Colors.white, fontSize: 13),
+    return ShowUpAnimation(
+      direction: Direction.horizontal,
+      curve: Curves.bounceIn,
+      offset: 0.5,
+      delayStart: Duration(seconds: 0),
+      child: Expanded(
+          child: Align(
+            alignment: Alignment.center,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                //buildTitle("Videoyu izle"),
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                        widget.text,
+                      style: const TextStyle(
+                        color: Color(0xffefefef),
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
                 ),
-                onPressed: () async {
-                  await player.setAsset(widget.pathToPlay);
-                  player.play();
-                },
-              ),
-              Text(widget.word),
-              Text(widget.sentence)
-            ],
-          ),
-        ],
-      ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width * 2 / 3,
+                    height: MediaQuery.of(context).size.width / 8,
+                    child: ElevatedButton(
+                      child: const Text(
+                        "Devam Et",
+                        style: TextStyle(fontSize: 19, fontWeight: FontWeight.w600),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        shadowColor: Colors.transparent,
+                        primary: Color(0xffff7548),
+                      ),
+                      onPressed: () {
+                        nextPage();
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )),
     );
   }
 }
+
 
 // ------------------- TABLE ----------------------
 
@@ -151,38 +218,45 @@ class _CreateTableState extends State<CreateTable> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          buildTitle("Kelimelerin Üzerine Basarak Dinle ve Tekrar Et"),
+    return ShowUpAnimation(
+      direction: Direction.horizontal,
+      curve: Curves.bounceIn,
+      offset: 0.5,
+      delayStart: Duration(seconds: 0),
 
-          Expanded(
-              child: Align(
-                  alignment: Alignment.topCenter,
-                  child: createTable(widget.rows))),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width * 2 / 3,
-              height: MediaQuery.of(context).size.width / 8,
-              child: ElevatedButton(
-                child: Text(
-                  "Devam Et",
-                  style: TextStyle(fontSize: 19, fontWeight: FontWeight.w600),
+      child: Expanded(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            buildTitle("Kelimelerin Üzerine Basarak Dinle ve Tekrar Et"),
+
+            Expanded(
+                child: Align(
+                    alignment: Alignment.topCenter,
+                    child: createTable(widget.rows))),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width * 2 / 3,
+                height: MediaQuery.of(context).size.width / 8,
+                child: ElevatedButton(
+                  child: const Text(
+                    "Devam Et",
+                    style: TextStyle(fontSize: 19, fontWeight: FontWeight.w600),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    shadowColor: Colors.transparent,
+                    primary: Color(0xffff7548),
+                  ),
+                  onPressed: () {
+                    nextPage();
+                  },
                 ),
-                style: ElevatedButton.styleFrom(
-                  shadowColor: Colors.transparent,
-                  primary: Color(0xffff7548),
-                ),
-                onPressed: () {
-                  nextPage();
-                },
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -223,52 +297,58 @@ class _CreateVideoState extends State<CreateVideo> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-        child: Align(
-      alignment: Alignment.center,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          buildTitle("Videoyu izle"),
-          Expanded(
-            child: Align(
-              alignment: Alignment.center,
-              child: AspectRatio(
-                aspectRatio: _controller.value.aspectRatio,
-                child: InkWell(
-                    onTap: () {
-                      _controller.value.isPlaying
-                          ? _controller.pause()
-                          : _controller.play();
-                    },
-                    child: Flexible(child: VideoPlayer(_controller))),
+    return ShowUpAnimation(
+      direction: Direction.horizontal,
+      curve: Curves.bounceIn,
+      offset: 0.5,
+      delayStart: Duration(seconds: 0),
+      child: Expanded(
+          child: Align(
+        alignment: Alignment.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            buildTitle("Videoyu izle"),
+            Expanded(
+              child: Align(
+                alignment: Alignment.center,
+                child: AspectRatio(
+                  aspectRatio: _controller.value.aspectRatio,
+                  child: InkWell(
+                      onTap: () {
+                        _controller.value.isPlaying
+                            ? _controller.pause()
+                            : _controller.play();
+                      },
+                      child: Flexible(child: VideoPlayer(_controller))),
+                ),
               ),
             ),
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width * 2 / 3,
-              height: MediaQuery.of(context).size.width / 8,
-              child: ElevatedButton(
-                child: Text(
-                  "Devam Et",
-                  style: TextStyle(fontSize: 19, fontWeight: FontWeight.w600),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width * 2 / 3,
+                height: MediaQuery.of(context).size.width / 8,
+                child: ElevatedButton(
+                  child: Text(
+                    "Devam Et",
+                    style: TextStyle(fontSize: 19, fontWeight: FontWeight.w600),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    shadowColor: Colors.transparent,
+                    primary: Color(0xffff7548),
+                  ),
+                  onPressed: () {
+                    nextPage();
+                  },
                 ),
-                style: ElevatedButton.styleFrom(
-                  shadowColor: Colors.transparent,
-                  primary: Color(0xffff7548),
-                ),
-                onPressed: () {
-                  nextPage();
-                },
               ),
             ),
-          ),
-        ],
-      ),
-    ));
+          ],
+        ),
+      )),
+    );
   }
 }
 
@@ -290,32 +370,38 @@ class _CreateCompleteTextState extends State<CreateCompleteText> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text("Boşluğa ne gelmelidir?"),
-            Text(widget.text),
-            TextField(
-              controller: answerController,
-            ),
-            Expanded(
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: ElevatedButton(
-                    onPressed: () {
-                      answerController.text.trim().toLowerCase() ==
-                              widget.answer.toLowerCase()
-                          ? correct(context, widget.complete, "")
-                          : inCorrect(context, widget.complete);
-                    },
-                    child: Text("İleri")),
+    return ShowUpAnimation(
+      direction: Direction.horizontal,
+      curve: Curves.bounceIn,
+      offset: 0.5,
+      delayStart: Duration(seconds: 0),
+      child: Expanded(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text("Boşluğa ne gelmelidir?"),
+              Text(widget.text),
+              TextField(
+                controller: answerController,
               ),
-            ),
-          ],
+              Expanded(
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: ElevatedButton(
+                      onPressed: () {
+                        answerController.text.trim().toLowerCase() ==
+                                widget.answer.toLowerCase()
+                            ? correct(context, widget.complete, "")
+                            : inCorrect(context, widget.complete);
+                      },
+                      child: Text("İleri")),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -374,103 +460,110 @@ class _CreateAnswerFromAudioState extends State<CreateAnswerFromAudio> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Align(
-        alignment: Alignment.center,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            buildTitle("Dinle, doğru Cevabı Bul"),
-            Expanded(
-              child: Align(
-                alignment: Alignment.center,
-                child: CircleAvatar(
-                  radius: 70,
-                  backgroundColor: Color(0xffff7548),
-                  child: IconButton(
-                    iconSize: 70,
-                    icon: Icon(CupertinoIcons.speaker_2),
-                    onPressed: () async {
-                      await player.setAsset(widget.path);
-                      _selected = 0;
-                      player.play();
-                    },
+    return ShowUpAnimation(
+      direction: Direction.horizontal,
+      curve: Curves.bounceIn,
+      offset: 0.5,
+      delayStart: Duration(seconds: 0),
+      child: Expanded(
+        child: Align(
+          alignment: Alignment.center,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              buildTitle("Dinle, doğru Cevabı Bul"),
+              Expanded(
+                child: Align(
+                  alignment: Alignment.center,
+
+                  child: CircleAvatar(
+                    radius: 70,
+                    backgroundColor: Color(0xffff7548),
+                    child: IconButton(
+                      iconSize: 70,
+                      icon: Icon(CupertinoIcons.speaker_2),
+                      onPressed: () async {
+                        await player.setAsset(widget.path);
+                        _selected = 0;
+                        player.play();
+                      },
+                    ),
                   ),
                 ),
               ),
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      child: ElevatedButton(
-                        onPressed: () => isCorrect(0),
-                        child: Text(widget.answers[0],
-                            style: TextStyle(fontSize: 18)),
-                        style: ElevatedButton.styleFrom(
-                          shadowColor: Colors.transparent,
-                          primary: Color(0xff76519C),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        child: ElevatedButton(
+                          onPressed: () => isCorrect(0),
+                          child: Text(widget.answers[0],
+                              style: TextStyle(fontSize: 18)),
+                          style: ElevatedButton.styleFrom(
+                            shadowColor: Colors.transparent,
+                            primary: Color(0xff76519C),
+                          ),
                         ),
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.width / 5,
                       ),
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.width / 5,
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    SizedBox(
-                      child: ElevatedButton(
-                        onPressed: () => isCorrect(1),
-                        child: Text(widget.answers[1],
-                            style: TextStyle(fontSize: 18)),
-                        style: ElevatedButton.styleFrom(
-                          shadowColor: Colors.transparent,
-                          primary: Color(0xff76519C),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      SizedBox(
+                        child: ElevatedButton(
+                          onPressed: () => isCorrect(1),
+                          child: Text(widget.answers[1],
+                              style: TextStyle(fontSize: 18)),
+                          style: ElevatedButton.styleFrom(
+                            shadowColor: Colors.transparent,
+                            primary: Color(0xff76519C),
+                          ),
                         ),
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.width / 5,
                       ),
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.width / 5,
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    SizedBox(
-                      child: ElevatedButton(
-                        onPressed: () => isCorrect(2),
-                        child: Text(widget.answers[2],
-                            style: TextStyle(fontSize: 18)),
-                        style: ElevatedButton.styleFrom(
-                          shadowColor: Colors.transparent,
-                          primary: Color(0xff76519C),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      SizedBox(
+                        child: ElevatedButton(
+                          onPressed: () => isCorrect(2),
+                          child: Text(widget.answers[2],
+                              style: TextStyle(fontSize: 18)),
+                          style: ElevatedButton.styleFrom(
+                            shadowColor: Colors.transparent,
+                            primary: Color(0xff76519C),
+                          ),
                         ),
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.width / 5,
                       ),
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.width / 5,
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    SizedBox(
-                      child: ElevatedButton(
-                        onPressed: () => isCorrect(3),
-                        child: Text(widget.answers[3],
-                            style: TextStyle(fontSize: 18)),
-                        style: ElevatedButton.styleFrom(
-                          shadowColor: Colors.transparent,
-                          primary: Color(0xff76519C),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      SizedBox(
+                        child: ElevatedButton(
+                          onPressed: () => isCorrect(3),
+                          child: Text(widget.answers[3],
+                              style: TextStyle(fontSize: 18)),
+                          style: ElevatedButton.styleFrom(
+                            shadowColor: Colors.transparent,
+                            primary: Color(0xff76519C),
+                          ),
                         ),
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.width / 5,
                       ),
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.width / 5,
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -485,7 +578,7 @@ class CreateDialogueOrder extends StatefulWidget {
   String path;
 
   List<String> complete = [];
-  List<int> indexes = [1, 2, 3, 4];
+  List<dynamic> indexes = [];
 
   CreateDialogueOrder(this.text, this.path, this.indexes);
 
@@ -538,6 +631,8 @@ class _CreateDialogueOrderState extends State<CreateDialogueOrder> {
   }
 
   void isCorrect(int index) {
+    print("COMPLETE  ${widget.complete}");
+    print("TEXT ${widget.text}");
     if (!isBtnDownClass().isBtnDown) {
       if (areListsEqual(widget.text, widget.complete)) {
         correct(context, "", widget.path);
@@ -554,8 +649,13 @@ class _CreateDialogueOrderState extends State<CreateDialogueOrder> {
   }
 
   createText() {
+
+    for (int i = 0; i < widget.text.length; i++){
+      widget.complete.add("");
+    }
+
     for (int i = 0; i < widget.text.length; i++) {
-      widget.complete.add(widget.text[widget.indexes[i] - 1]);
+      widget.complete[widget.indexes[i] - 1] = widget.text[i];
       print("\nRESULT\n");
       print(widget.text);
       print(widget.complete);
@@ -575,76 +675,83 @@ class _CreateDialogueOrderState extends State<CreateDialogueOrder> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Align(
-        alignment: Alignment.center,
-        child: Column(
-          children: [
-            buildTitle("Diyaloğu Sıralayın"),
-            Expanded(
-              child: Align(
-                alignment: Alignment.center,
-                child: ReorderableListView.builder(
-                  shrinkWrap: true,
-                  buildDefaultDragHandles: true,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Card(
-                      color: Colors.blueGrey,
-                      key: ValueKey(index),
-                      elevation: 2,
-                      child: ListTile(
-                        title: Text(
-                          widget.text[index],
-                          style: TextStyle(color: Colors.white),
+    return ShowUpAnimation(
+      direction: Direction.horizontal,
+      curve: Curves.bounceIn,
+      offset: 0.5,
+      delayStart: Duration(seconds: 0),
+      child: Expanded(
+        child: Align(
+          alignment: Alignment.center,
+          child: Column(
+            children: [
+              buildTitle("Diyaloğu Sıralayın"),
+              Expanded(
+                child: Align(
+                  alignment: Alignment.center,
+                  child: ReorderableListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    buildDefaultDragHandles: true,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Card(
+                        color: Colors.blueGrey,
+                        key: ValueKey(index),
+                        elevation: 2,
+                        child: ListTile(
+                          title: Text(
+                            widget.text[index],
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          trailing: ReorderableDragStartListener(
+                            index: index,
+                            child: const Icon(Icons.drag_handle),
+                          ),
                         ),
-                        trailing: ReorderableDragStartListener(
-                          index: index,
-                          child: const Icon(Icons.drag_handle),
+                      );
+                    },
+                    itemCount: widget.text.length,
+                    onReorder: reorderData,
+                  ),
+                ),
+              ),
+
+              /*return ReorderableListView(
+                buildDefaultDragHandles: false,
+                  children: <Widget>[
+                    for(final items in widget.text)
+                      Card(
+                        color: Colors.blueGrey,
+                        key: ValueKey(items),
+                        elevation: 2,
+                        child: ListTile(
+                          title: Text(items),
+                          leading: Icon(Icons.work,color: Colors.black,),
                         ),
                       ),
-                    );
-                  },
-                  itemCount: widget.text.length,
+                  ],
                   onReorder: reorderData,
+
+                );*/
+
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: ElevatedButton(
+                  child: const Text(
+                    "Devam Et",
+                    style: TextStyle(fontSize: 19, fontWeight: FontWeight.w600),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    shadowColor: Colors.transparent,
+                    primary: Color(0xffff7548),
+                  ),
+                  onPressed: () {
+                    isCorrect(0);
+                  },
                 ),
               ),
-            ),
-
-            /*return ReorderableListView(
-              buildDefaultDragHandles: false,
-                children: <Widget>[
-                  for(final items in widget.text)
-                    Card(
-                      color: Colors.blueGrey,
-                      key: ValueKey(items),
-                      elevation: 2,
-                      child: ListTile(
-                        title: Text(items),
-                        leading: Icon(Icons.work,color: Colors.black,),
-                      ),
-                    ),
-                ],
-                onReorder: reorderData,
-
-              );*/
-
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: ElevatedButton(
-                child: const Text(
-                  "Devam Et",
-                  style: TextStyle(fontSize: 19, fontWeight: FontWeight.w600),
-                ),
-                style: ElevatedButton.styleFrom(
-                  shadowColor: Colors.transparent,
-                  primary: Color(0xffff7548),
-                ),
-                onPressed: () {
-                  isCorrect(0);
-                },
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -699,80 +806,77 @@ class _CreateAnswerFromImageState extends State<CreateAnswerFromImage> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Align(
-        alignment: Alignment.center,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            buildTitle("Resim ile Cevabı Eşleştir"),
-            Expanded(
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: Align(
-                        child: Image.asset(
-                          widget.img,
-                          fit: BoxFit.contain,
-                          height:
-                              MediaQuery.of(context).size.width * 2 / 3 > 300
-                                  ? 300
-                                  : MediaQuery.of(context).size.width * 2 / 3,
-                          width: MediaQuery.of(context).size.width * 2 / 3 > 300
-                              ? 300
-                              : MediaQuery.of(context).size.width * 2 / 3,
-                        ),
-                        alignment: Alignment.bottomCenter,
-                      ),
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              child: ElevatedButton(
-                                onPressed: () => isCorrect(0),
-                                child: Text(widget.answers[0],
-                                    style: TextStyle(fontSize: 18)),
-                                style: ElevatedButton.styleFrom(
-                                  shadowColor: Colors.transparent,
-                                  primary: Color(0xff76519C),
-                                ),
-                              ),
-                              width: MediaQuery.of(context).size.width,
-                              height: MediaQuery.of(context).size.width / 3.5,
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            SizedBox(
-                              child: ElevatedButton(
-                                onPressed: () => isCorrect(1),
-                                child: Text(widget.answers[1],
-                                    style: TextStyle(fontSize: 18)),
-                                style: ElevatedButton.styleFrom(
-                                  shadowColor: Colors.transparent,
-                                  primary: Color(0xff76519C),
-                                ),
-                              ),
-                              width: MediaQuery.of(context).size.width,
-                              height: MediaQuery.of(context).size.width / 3.5,
-                            ),
-                          ],
+    return ShowUpAnimation(
+      direction: Direction.horizontal,
+      curve: Curves.bounceIn,
+      offset: 0.5,
+      delayStart: Duration(seconds: 0),
+      child: Expanded(
+        child: Align(
+          alignment: Alignment.center,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              buildTitle("Resim ile Cevabı Eşleştir"),
+              Expanded(
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Align(
+                          child: Image.asset(
+                            widget.img,
+                            fit: BoxFit.contain,
+                            height:
+                                MediaQuery.of(context).size.width * 2 / 3 > 300
+                                    ? 300
+                                    : MediaQuery.of(context).size.width * 2 / 3,
+                            width: MediaQuery.of(context).size.width * 2 / 3 > 300
+                                ? 300
+                                : MediaQuery.of(context).size.width * 2 / 3,
+                          ),
+                          alignment: Alignment.bottomCenter,
                         ),
                       ),
-                    ),
-                  ],
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Align(
+                            alignment: Alignment.bottomCenter,
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: widget.answers.length,
+                              itemBuilder: (BuildContext context, int index){
+                                return Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 3.0),
+                                  child: SizedBox(
+                                    child: ElevatedButton(
+                                      onPressed: () => isCorrect(index),
+                                      child: Text(widget.answers[index],
+                                          style: TextStyle(fontSize: 18)),
+                                      style: ElevatedButton.styleFrom(
+                                        shadowColor: Colors.transparent,
+                                        primary: Color(0xff76519C),
+                                      ),
+                                    ),
+                                    width: MediaQuery.of(context).size.width,
+                                    height: MediaQuery.of(context).size.width / 3.5,
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -827,104 +931,134 @@ class _CreateAnswerFromTextState extends State<CreateAnswerFromText> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Align(
-        alignment: Alignment.center,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            buildTitle("Soruya Cevap Ver"),
+    return ShowUpAnimation(
+      direction: Direction.horizontal,
+      curve: Curves.bounceIn,
+      offset: 0.5,
+      delayStart: Duration(seconds: 0),
+      child: Expanded(
+        child: Align(
+          alignment: Alignment.center,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              buildTitle("Soruya Cevap Ver"),
 
-            Flexible(
-              flex: 1,
-              child: Align(
-                alignment: Alignment.center,
-                child: Text(
-                  widget.text,
-                  style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 19,
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
-
-            Expanded(
-              flex: 3,
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        child: ElevatedButton(
-                          onPressed: () => isCorrect(0),
-                          child: Text(widget.answers[0],
-                              style: TextStyle(fontSize: 18)),
-                          style: ElevatedButton.styleFrom(
-                            shadowColor: Colors.transparent,
-                            primary: Color(0xff76519C),
-                          ),
-                        ),
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.width / 5,
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      SizedBox(
-                        child: ElevatedButton(
-                          onPressed: () => isCorrect(1),
-                          child: Text(widget.answers[1],
-                              style: TextStyle(fontSize: 18)),
-                          style: ElevatedButton.styleFrom(
-                            shadowColor: Colors.transparent,
-                            primary: Color(0xff76519C),
-                          ),
-                        ),
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.width / 5,
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      SizedBox(
-                        child: ElevatedButton(
-                          onPressed: () => isCorrect(2),
-                          child: Text(widget.answers[2],
-                              style: TextStyle(fontSize: 18)),
-                          style: ElevatedButton.styleFrom(
-                            shadowColor: Colors.transparent,
-                            primary: Color(0xff76519C),
-                          ),
-                        ),
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.width / 5,
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      SizedBox(
-                        child: ElevatedButton(
-                          onPressed: () => isCorrect(3),
-                          child: Text(widget.answers[3],
-                              style: TextStyle(fontSize: 18)),
-                          style: ElevatedButton.styleFrom(
-                            shadowColor: Colors.transparent,
-                            primary: Color(0xff76519C),
-                          ),
-                        ),
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.width / 5,
-                      ),
-                    ],
+              Flexible(
+                flex: 1,
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    widget.text,
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 19,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
-            ),
-          ],
+
+              Expanded(
+                flex: 3,
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      children: [
+
+                        ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: widget.answers.length,
+                          itemBuilder: (BuildContext context, int index){
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 3.0),
+                              child: SizedBox(
+                                child: ElevatedButton(
+                                  onPressed: () => isCorrect(index),
+                                  child: Text(widget.answers[index],
+                                      style: TextStyle(fontSize: 18)),
+                                  style: ElevatedButton.styleFrom(
+                                    shadowColor: Colors.transparent,
+                                    primary: Color(0xff76519C),
+                                  ),
+                                ),
+                                width: MediaQuery.of(context).size.width,
+                                height: MediaQuery.of(context).size.width / 3.5,
+                              ),
+                            );
+                          },
+                        ),
+
+                        // SizedBox(
+                        //   child: ElevatedButton(
+                        //     onPressed: () => isCorrect(0),
+                        //     child: Text(widget.answers[0],
+                        //         style: TextStyle(fontSize: 18)),
+                        //     style: ElevatedButton.styleFrom(
+                        //       shadowColor: Colors.transparent,
+                        //       primary: Color(0xff76519C),
+                        //     ),
+                        //   ),
+                        //   width: MediaQuery.of(context).size.width,
+                        //   height: MediaQuery.of(context).size.width / 5,
+                        // ),
+                        // const SizedBox(
+                        //   height: 5,
+                        // ),
+                        // SizedBox(
+                        //   child: ElevatedButton(
+                        //     onPressed: () => isCorrect(1),
+                        //     child: Text(widget.answers[1],
+                        //         style: TextStyle(fontSize: 18)),
+                        //     style: ElevatedButton.styleFrom(
+                        //       shadowColor: Colors.transparent,
+                        //       primary: Color(0xff76519C),
+                        //     ),
+                        //   ),
+                        //   width: MediaQuery.of(context).size.width,
+                        //   height: MediaQuery.of(context).size.width / 5,
+                        // ),
+                        // SizedBox(
+                        //   height: 5,
+                        // ),
+                        // SizedBox(
+                        //   child: ElevatedButton(
+                        //     onPressed: () => isCorrect(2),
+                        //     child: Text(widget.answers[2],
+                        //         style: TextStyle(fontSize: 18)),
+                        //     style: ElevatedButton.styleFrom(
+                        //       shadowColor: Colors.transparent,
+                        //       primary: Color(0xff76519C),
+                        //     ),
+                        //   ),
+                        //   width: MediaQuery.of(context).size.width,
+                        //   height: MediaQuery.of(context).size.width / 5,
+                        // ),
+                        // SizedBox(
+                        //   height: 5,
+                        // ),
+                        // SizedBox(
+                        //   child: ElevatedButton(
+                        //     onPressed: () => isCorrect(3),
+                        //     child: Text(widget.answers[3],
+                        //         style: TextStyle(fontSize: 18)),
+                        //     style: ElevatedButton.styleFrom(
+                        //       shadowColor: Colors.transparent,
+                        //       primary: Color(0xff76519C),
+                        //     ),
+                        //   ),
+                        //   width: MediaQuery.of(context).size.width,
+                        //   height: MediaQuery.of(context).size.width / 5,
+                        // ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -939,6 +1073,8 @@ class CreateAudioMatch extends StatefulWidget {
   var correct_answer_index;
   String complete = '';
 
+  var _selected = null;
+
   CreateAudioMatch(
       this.pathsToPlay, this.text, this.correct_answer_index, this.complete);
 
@@ -948,7 +1084,7 @@ class CreateAudioMatch extends StatefulWidget {
 
 class _CreateAudioMatchState extends State<CreateAudioMatch> {
   String path = '';
-  var _selected;
+
 
   late AudioPlayer player;
   @override
@@ -957,6 +1093,12 @@ class _CreateAudioMatchState extends State<CreateAudioMatch> {
     player = AudioPlayer();
 
     isBtnDownClass().isBtnDown = false;
+  }
+
+  @override
+  void didUpdateWidget(covariant CreateAudioMatch oldWidget) {
+    // TODO: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -981,69 +1123,75 @@ class _CreateAudioMatchState extends State<CreateAudioMatch> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          buildTitle("Ses ile metni eşleştir"),
+    return ShowUpAnimation(
+      direction: Direction.horizontal,
+      curve: Curves.bounceIn,
+      offset: 0.5,
+      delayStart: Duration(seconds: 0),
+      child: Expanded(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            buildTitle("Ses ile metni eşleştir"),
 
-          Text(
-            widget.text,
-            style: TextStyle(
-                color: Colors.white, fontSize: 17, fontWeight: FontWeight.bold),
-          ),
-
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                CircleAvatar(
-                  radius: 60,
-                  backgroundColor: Color(0xffff7548),
-                  child: IconButton(
-                    iconSize: 60,
-                    icon: const Icon(CupertinoIcons.speaker_2_fill),
-                    onPressed: () async {
-                      await player.setAsset(widget.pathsToPlay[0]);
-                      _selected = 0;
-                      player.play();
-                    },
-                  ),
-                ),
-                CircleAvatar(
-                  radius: 60,
-                  backgroundColor: Color(0xffff7548),
-                  child: IconButton(
-                    iconSize: 60,
-                    icon: const Icon(CupertinoIcons.speaker_2_fill, color: Colors.black,),
-                    onPressed: () async {
-                      await player.setAsset(widget.pathsToPlay[1]);
-                      _selected = 1;
-                      player.play();
-                    },
-                  ),
-                ),
-              ],
+            Text(
+              widget.text,
+              style: TextStyle(
+                  color: Colors.white, fontSize: 17, fontWeight: FontWeight.bold),
             ),
-          ),
-          Expanded(
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: ElevatedButton(
-                child: Text("Cevapla"),
-                onPressed: () {
-                  isCorrect(_selected);
-                },
+
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  CircleAvatar(
+                    radius: 60,
+                    backgroundColor: Color(0xffff7548),
+                    child: IconButton(
+                      iconSize: 60,
+                      icon: const Icon(CupertinoIcons.speaker_2_fill),
+                      onPressed: () async {
+                        await player.setAsset(widget.pathsToPlay[0]);
+                        widget._selected = 0;
+                        player.play();
+                      },
+                    ),
+                  ),
+                  CircleAvatar(
+                    radius: 60,
+                    backgroundColor: Color(0xffff7548),
+                    child: IconButton(
+                      iconSize: 60,
+                      icon: const Icon(CupertinoIcons.speaker_2_fill, color: Colors.black,),
+                      onPressed: () async {
+                        await player.setAsset(widget.pathsToPlay[1]);
+                        widget._selected = 1;
+                        player.play();
+                      },
+                    ),
+                  ),
+                ],
               ),
             ),
-          ),
-        ],
+            Expanded(
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: ElevatedButton(
+                  child: Text("Cevapla"),
+                  onPressed: () {
+                    isCorrect(widget._selected);
+                  },
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
 
-// -----------Drag and Drop -------------
+// -----------Drag and Drop Text -------------
 
 class CreateDragText extends StatefulWidget {
 
@@ -1083,121 +1231,304 @@ class _CreateDragTextState extends State<CreateDragText> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const Text(
-            "Eşleştir",
-            style: TextStyle(
-                color: Colors.white, fontSize: 19, fontWeight: FontWeight.bold),
-          ),
+    return ShowUpAnimation(
+      direction: Direction.horizontal,
+      curve: Curves.bounceIn,
+      offset: 0.5,
+      delayStart: Duration(seconds: 0),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Text(
+              "Eşleştir",
+              style: TextStyle(
+                  color: Colors.white, fontSize: 19, fontWeight: FontWeight.bold),
+            ),
 
-          Expanded(
-            child: Align(
-              alignment: Alignment.center,
-              child: ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: widget.answers.length,
-                  itemBuilder: (BuildContext context, int index) {
+            Expanded(
+              child: Align(
+                alignment: Alignment.center,
+                child: ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: widget.answers.length,
+                    itemBuilder: (BuildContext context, int index) {
 
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Draggable(
-                          childWhenDragging: SizedBox(
-                            width: MediaQuery.of(context).size.width / 3,
-                            height: MediaQuery.of(context).size.width / 6,
-                          ),
-
-                          data: answerList[index][0],
-
-                          feedback: SizedBox(
-                            width: MediaQuery.of(context).size.width / 3,
-                            height: MediaQuery.of(context).size.width / 6,
-                            child: Card(
-                              color: Color(0xffff7548),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Center(
-                                  child: Text(answerList[index][0], textAlign: TextAlign.center,
-                                    style: const TextStyle(
-                                      color: Color(0xffefefef),
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                ),
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Draggable(
+                              childWhenDragging: SizedBox(
+                                width: MediaQuery.of(context).size.width * 3 / 8,
+                                //height: MediaQuery.of(context).size.width / 6,
                               ),
-                            ),
-                          ),
 
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width / 3,
-                            height: MediaQuery.of(context).size.width / 6,
-                            child: Card(
-                              color: Color(0xffff7548),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Center(child: Text(answerList[index][0], textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                    color: Color(0xffefefef),
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 16,
-                                  ),)),
-                              ),
-                            ),
-                          ),
-                        ),
+                              data: widget.answers[index][1],
 
-                        DragTarget<String>(
-                          builder: (
-                              BuildContext context,
-                              List<dynamic> accepted,
-                              List<dynamic> rejected,
-                              ){
-                            return SizedBox(
-                              width: MediaQuery.of(context).size.width / 3,
-                              height: MediaQuery.of(context).size.width / 6,
-                              child: Card(
-                                color: Color(0xffff7548),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Center(
-                                    child: Text(answerList[index][1], textAlign: TextAlign.center,
-                                      style: const TextStyle(
-                                        color: Color(0xffefefef),
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 16,
+                              feedback: SizedBox(
+                                width: MediaQuery.of(context).size.width * 3 / 8,
+                                //height: MediaQuery.of(context).size.width / 6,
+                                child: Card(
+                                  color: Color(0xffff7548),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Center(
+                                      child: Text(widget.answers[index][0], textAlign: TextAlign.center,
+                                        style: const TextStyle(
+                                          color: Color(0xffefefef),
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 16,
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
                               ),
-                            );
-                          },
-                          onAccept: (String txt) {
-                            if(txt == answerList[index][0]){
-                              print("DOĞRU");
-                              widget.correct_total++;
-                              if(widget.correct_total >= widget.answers.length){
-                                correct(context, "", "");
-                              }
-                            }
-                            else{
-                              print(txt + "              " + answerList[index][0]);
-                              inCorrect(context, "");
-                            }
-                          },
+
+                              child: SizedBox(
+                                width: MediaQuery.of(context).size.width * 3 / 8,
+                                //height: MediaQuery.of(context).size.width / 6,
+                                child: Card(
+                                  color: Color(0xffff7548),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Center(child: Text(widget.answers[index][0], textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                        color: Color(0xffefefef),
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 16,
+                                      ),)),
+                                  ),
+                                ),
+                              ),
+                            ),
+
+                            DragTarget<String>(
+                              builder: (
+                                  BuildContext context,
+                                  List<dynamic> accepted,
+                                  List<dynamic> rejected,
+                                  ){
+                                return SizedBox(
+                                  width: MediaQuery.of(context).size.width * 3 / 8,
+                                  //height: MediaQuery.of(context).size.width / 6,
+                                  child: Card(
+                                    color: Color(0xff41704F),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Center(
+                                        child: Text(answerList[index][1], textAlign: TextAlign.center,
+                                          style: const TextStyle(
+                                            color: Color(0xffefefef),
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                              onAccept: (String txt) {
+                                if(txt == answerList[index][1]){
+                                  print("DOĞRU");
+                                  widget.correct_total++;
+                                  if(widget.correct_total >= widget.answers.length){
+                                    correct(context, "", "");
+                                  }
+                                }
+                                else{
+                                  print(txt + "              " + widget.answers[index][1]);
+                                  print(widget.answers);
+                                  print(answerList);
+                                  inCorrect(context, "");
+                                }
+                              },
+                            ),
+                          ],
                         ),
-                      ],
-                    );
-                  }),
+                      );
+                    }),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ----------------- Drag and Drop Image ---------------
+
+class CreateDragImage extends StatefulWidget {
+
+  int correct_total = 0;
+
+  var correct_answer_index;
+
+  List<dynamic> answers;
+
+  CreateDragImage(this.answers);
+
+  @override
+  _CreateDragImageState createState() => _CreateDragImageState();
+}
+
+class _CreateDragImageState extends State<CreateDragImage> {
+  var answerList;
+  String path = '';
+  var _selected;
+
+  late AudioPlayer player;
+  @override
+  void initState() {
+    super.initState();
+    player = AudioPlayer();
+
+    answerList = (widget.answers.toList()..shuffle());
+
+    isBtnDownClass().isBtnDown = false;
+  }
+
+  @override
+  void didUpdateWidget(covariant CreateDragImage oldWidget) {
+    // TODO: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
+
+    answerList = (widget.answers.toList()..shuffle());
+
+    print(" ANSWER LIST:  ${answerList}");
+  }
+
+  @override
+  void dispose() {
+    player.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ShowUpAnimation(
+      direction: Direction.horizontal,
+      curve: Curves.bounceIn,
+      offset: 1,
+      delayStart: Duration(seconds: 0),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Text(
+              "Eşleştir",
+              style: TextStyle(
+                  color: Colors.white, fontSize: 19, fontWeight: FontWeight.bold),
+            ),
+
+            Expanded(
+              child: Align(
+                alignment: Alignment.center,
+                child: ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: widget.answers.length,
+                    itemBuilder: (BuildContext context, int index) {
+
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Draggable(
+                              childWhenDragging: SizedBox(
+                                width: MediaQuery.of(context).size.width * 3 / 8,
+                                //height: MediaQuery.of(context).size.width / 6,
+                              ),
+
+                              data: widget.answers[index][0],
+
+                              feedback: SizedBox(
+                                width: MediaQuery.of(context).size.width * 3 / 8,
+                                //height: MediaQuery.of(context).size.width / 6,
+                                child: Card(
+                                  color: Color(0xffff7548),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Center(
+                                      child: Text(widget.answers[index][0], textAlign: TextAlign.center,
+                                        style: const TextStyle(
+                                          color: Color(0xffefefef),
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+                              child: SizedBox(
+                                width: MediaQuery.of(context).size.width * 3 / 8,
+                                //height: MediaQuery.of(context).size.width / 6,
+                                child: Card(
+                                  color: Color(0xffff7548),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Center(child: Text(widget.answers[index][0], textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                        color: Color(0xffefefef),
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 16,
+                                      ),)),
+                                  ),
+                                ),
+                              ),
+                            ),
+
+                            DragTarget<String>(
+                              builder: (
+                                  BuildContext context,
+                                  List<dynamic> accepted,
+                                  List<dynamic> rejected,
+                                  ){
+                                return SizedBox(
+                                  width: MediaQuery.of(context).size.width * 3 / 8,
+                                  //height: MediaQuery.of(context).size.width / 6,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Center(
+                                      child: Image.asset(
+                                          answerList[index][1],
+                                      )
+                                    ),
+                                  ),
+                                );
+                              },
+                              onAccept: (String txt) {
+                                if(txt == answerList[index][0]){
+                                  print("DOĞRU");
+                                  widget.correct_total++;
+                                  if(widget.correct_total >= widget.answers.length){
+                                    correct(context, "", "");
+                                  }
+                                }
+                                else{
+                                  print(txt + "              " + answerList[index][0]);
+                                  inCorrect(context, "");
+                                }
+                              },
+                            ),
+                          ],
+                        ),
+                      );
+                    }),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

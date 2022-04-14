@@ -3,6 +3,7 @@ import 'package:french/main/home.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:show_up_animation/show_up_animation.dart';
 
 class FinishLesson extends StatefulWidget {
 
@@ -36,71 +37,87 @@ class _FinishLessonState extends State<FinishLesson> {
   }
 
   buildBody() {
-    return Center(
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => Home()),
+              (Route<dynamic> route) => false,
+        );
+        return false;
+      },
 
-                  Text(widget.lessonName, textAlign: TextAlign.center, style: GoogleFonts.lemonada(fontWeight: FontWeight.w700, fontSize: 28, color: Colors.yellow),),
+      child: ShowUpAnimation(
+        direction: Direction.vertical,
+        offset: 0.2,
+        curve: Curves.fastOutSlowIn,
+        child: Center(
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
 
-                  SizedBox(height: 30,),
+                      Text(widget.lessonName, textAlign: TextAlign.center, style: GoogleFonts.lemonada(fontWeight: FontWeight.w700, fontSize: 28, color: Colors.yellow),),
 
-                  Container(
-                    width: 120,
-                    height: 120,
-                    child: Padding(
-                      padding: EdgeInsets.all(13),
-                      child: Image.asset(widget.path),
-                    ),
+                      SizedBox(height: 30,),
+
+                      Container(
+                        width: 120,
+                        height: 120,
+                        child: Padding(
+                          padding: EdgeInsets.all(13),
+                          child: Image.asset(widget.path),
+                        ),
+                      ),
+
+                      SizedBox(height: 10,),
+
+                      Text("TAMAMLANDI!", textAlign: TextAlign.center, style: GoogleFonts.carterOne(fontWeight: FontWeight.bold, fontSize: 26, color: Colors.yellow, letterSpacing: 2),),
+
+                      SizedBox(height: 15,),
+
+                      Padding(
+                        padding: EdgeInsets.all(15.0),
+                        child: LinearPercentIndicator(
+                          width: MediaQuery.of(context).size.width - 50,
+                          animation: true,
+                          lineHeight: 20.0,
+                          animationDuration: 2000,
+                          percent: 1,
+                          center: Text("100%", textAlign: TextAlign.center, style: GoogleFonts.irishGrover(fontWeight: FontWeight.w700, letterSpacing: 3, fontSize: 15),),
+                          linearStrokeCap: LinearStrokeCap.roundAll,
+                          progressColor: Color(0xffBDBC5B),
+                        ),
+                      ),
+                    ],
                   ),
+                ),
 
-                  SizedBox(height: 10,),
+                Align(
+                  alignment: Alignment.center,
+                  child: ElevatedButton(
+                    onPressed: (){
+                      Future((){
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (context) => Home()),
+                              (Route<dynamic> route) => false,
+                        );
+                      });
 
-                  Text("TAMAMLANDI!", textAlign: TextAlign.center, style: GoogleFonts.carterOne(fontWeight: FontWeight.bold, fontSize: 26, color: Colors.yellow, letterSpacing: 2),),
-
-                  SizedBox(height: 15,),
-
-                  Padding(
-                    padding: EdgeInsets.all(15.0),
-                    child: LinearPercentIndicator(
-                      width: MediaQuery.of(context).size.width - 50,
-                      animation: true,
-                      lineHeight: 20.0,
-                      animationDuration: 2000,
-                      percent: 1,
-                      center: Text("100%", textAlign: TextAlign.center, style: GoogleFonts.irishGrover(fontWeight: FontWeight.w700, letterSpacing: 3, fontSize: 15),),
-                      linearStrokeCap: LinearStrokeCap.roundAll,
-                      progressColor: Color(0xffBDBC5B),
-                    ),
+                    },
+                    child: Text("DERSİ BİTİR"),
                   ),
-                ],
-              ),
+                )
+              ],
             ),
-
-            Align(
-              alignment: Alignment.center,
-              child: ElevatedButton(
-                onPressed: (){
-                  Future((){
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (context) => Home()),
-                          (Route<dynamic> route) => false,
-                    );
-                  });
-
-                },
-                child: Text("DERSİ BİTİR"),
-              ),
-            )
-          ],
+          ),
         ),
       ),
     );

@@ -33,7 +33,6 @@ class HomeState extends State {
       home: SafeArea(
         child: Scaffold(
             backgroundColor: Colors.white,
-            //appBar: buildAppBar(),
             body: buildBody(context),
             bottomNavigationBar: buildNavbar(),
           ),
@@ -95,26 +94,26 @@ class HomeState extends State {
     );*/
   }
 
-  /*AppBar buildAppBar() {
-    return AppBar(
-      backgroundColor: Colors.white,
-      title: Text("Gallus", style: TextStyle(color: Colors.blueGrey, fontSize: 23, fontStyle: FontStyle.italic, fontWeight: FontWeight.bold, letterSpacing: 1, fontFamily: 'playfair_display'),),
-      actions: const [
-        Padding(
-          padding: EdgeInsets.only(right: 20.0),
-          child: CircleAvatar(
-            backgroundColor: Colors.black,
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.only(right: 20.0),
-          child: CircleAvatar(
-            backgroundColor: Colors.black,
-          ),
-        ),
-      ],
-    );
-  }*/
+  // AppBar buildAppBar() {
+  //   return AppBar(
+  //     backgroundColor: Colors.white,
+  //     title: Text("Gallus", style: TextStyle(color: Colors.blueGrey, fontSize: 23, fontStyle: FontStyle.italic, fontWeight: FontWeight.bold, letterSpacing: 1, fontFamily: 'playfair_display'),),
+  //     actions: const [
+  //       Padding(
+  //         padding: EdgeInsets.only(right: 20.0),
+  //         child: CircleAvatar(
+  //           backgroundColor: Colors.black,
+  //         ),
+  //       ),
+  //       Padding(
+  //         padding: EdgeInsets.only(right: 20.0),
+  //         child: CircleAvatar(
+  //           backgroundColor: Colors.black,
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
 
   Widget buildBody(BuildContext context) {
     return SafeArea(

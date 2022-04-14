@@ -21,6 +21,7 @@
           ["Comment Ça va?", "Nasılsın?"],
           ["Comment allez-vous?", "Nasılsınız?"],
           ["Très bien, merci.", "Çok iyiyim, teşekkür ederim."],
+          ["Ça va bien.", "İyiyim."],
           ["Ça va mal.", "Kötüyüm."],
           ["Au revoir.", "Hoşça kal."]
         ],
@@ -33,6 +34,7 @@
           "assets/audio/comment_ça_va.mp3",
           "assets/audio/comment_allez_vous.mp3",
           "assets/audio/tres_bien_merci.mp3",
+          "assets/audio/ça_va_bien.mp3",
           "assets/audio/ça_va_mal.mp3",
           "assets/audio/au_revoir.mp3"
         ]
@@ -40,7 +42,7 @@
 
       {
         "type": "select_from_image",
-        "path": "assets/audio/ça_va.mp3",
+        "path": "assets/audio/ça_va_bien.mp3",
         "img": "assets/images/happy.png",
         "answers": [
           "Ça va bien.",
@@ -62,7 +64,7 @@
 
       {
         "type": "select_from_image",
-        "path": "assets/audio/ça_va.mp3",
+        "path": "assets/audio/comme_çi_comme_ça.mp3",
         "img": "assets/images/neutral.png",
         "answers": [
           "Ça va bien.",
@@ -99,9 +101,9 @@
         "type": "select_from_audio",
         "path": "assets/audio/je_mappele_jolie.mp3",
         "answers": [
-          "Je m'appele Jolie.",
-          "Je m'appele Joly",
-          "Tu t'appele Jolie",
+          "Je m'appelle Jolie.",
+          "Je m'appelle Joly",
+          "Tu t'appele Jolie.",
           "Elle s'appele Jolie."
         ],
         "correct_answer_index": 1
@@ -109,7 +111,7 @@
 
       {
         "type": "select_from_audio",
-        "path": "assets/audio/je_mappele_jolie.mp3",
+        "path": "assets/audio/je_vais_mal.mp3",
         "answers": [
           "Je ve mal.",
           "Jö vais mal.",
@@ -132,7 +134,7 @@
 
       {
         "type": "audio_match",
-        "text": "Au revoi!",
+        "text": "Au revoir!",
         "answers": [
           "assets/audio/au_revoir.mp3",
           "assets/audio/a_bientot.mp3"
@@ -172,18 +174,6 @@
         ],
         "correct_answer_index": 1,
         "complete": "İyi akşamlar."
-      },
-
-      {
-        "type": "dialogue_order",
-        "path": "assets/audio/dialogue_1.mp3",
-        "answers": [
-          "Ça va bien. Et vous?",
-          "Merci, je vais bien. Comment vous vous appelez?",
-          "Je m'appele Jolie",
-          "Bonjour, comment ça va?"
-        ],
-        "indexes": [2, 3, 4, 1]
       }
     ]
   },
@@ -200,9 +190,9 @@
       {
         "type": "table",
         "rows": [
-          ["Comment tu t'appeles?\n - Je m'appele Bernard.", "Adın nedir?\n- Adım Bernard."],
+          ["Comment tu t'appeles?\n - Je m'appelle Bernard.", "Adın nedir?\n- Adım Bernard."],
           ["Quel est ton prénom?\n - Mon prénom est Coraline.", "İsmin nedir?\n - Adım Coraline."],
-          ["Comment vous appelez-vous?\n - Je m'appele Alexandre.", "Adınız nedir?\n - Adım Alexandre."],
+          ["Comment vous appelez-vous?\n - Je m'appelle Alexandre.", "Adınız nedir?\n - Adım Alexandre."],
           ["Quel est votre prénom?\n - Mon prénom, c'est Joly.", "İsminiz nedir?\n - İsmim Joly."]
         ],
         "paths": [
@@ -214,10 +204,92 @@
       },
 
       {
-        "type": "drag",
+        "type": "select_from_audio",
+        "path": "assets/audio/comment_tu_tappeles.mp3",
         "answers": [
-          ["Quel est ton prénom?", "Mon prénom, est Coraline."],
-          ["Comment tu t'appelles?", "Je m'appelle Bernard."]
+          "Comment tu t'appeles.",
+          "Comment vous appelez-vous?",
+          "Je m'appelle Bernard.",
+          "Je m'appelle Coraline."
+        ],
+        "correct_answer_index": 0
+      },
+
+
+
+      {
+        "type": "select_from_audio",
+        "path": "assets/audio/Quel_est_ton_prenom.mp3",
+        "answers": [
+          "Quel est ton prénom?",
+          "Comment tu t'appeles.",
+          "Quel est votre prénom?",
+          "Comment vous appelez vous?"
+        ],
+        "correct_answer_index": 0
+      },
+
+      {
+        "type": "drag_text",
+        "answers": [
+          ["Comment tu t'appeles", "Informal"],
+          ["Comment vous appelez-vous", "Formal"],
+          ["Quel est ton prénom?", "Informal"],
+          ["Quel est votre prénom?", "Formal"]
+        ]
+      },
+
+      {
+        "type": "select_from_audio",
+        "path": "assets/audio/je_mappele_bernard.mp3",
+        "answers": [
+          "Comment tu t'appeles.",
+          "Comment vous appelez-vous?",
+          "Je m'appelle Bernard.",
+          "Je m'appelle Coraline."
+        ],
+        "correct_answer_index": 2
+      },
+
+      {
+        "type": "drag_text",
+        "answers": [
+          ["Quel est votre prénom?", "Mon prénom, c'est Caroline."],
+          ["Quel est ton prénom?", "Je m'appelle Bernard"]
+        ]
+      },
+
+      {
+        "type": "select_from_text",
+        "path": "assets/audio/je_mappele_bernard.mp3",
+        "text": "Comment il s’appelle?",
+        "answers": [
+          "Elle s’appelle Coraline.",
+          "Il s’appelle Bernard.",
+          "Je vais mal.",
+          "Je m’appelle Joly."
+        ],
+        "correct_answer_index": 1
+      },
+
+      {
+        "type": "select_from_audio",
+        "path": "assets/audio/quel_est_votre_prenom.mp4",
+        "answers": [
+          "Je m'appelle Coraline.",
+          "Je m'appelle Bernard.",
+          "Je suis Joly.",
+          "Mon prénom est Coraline."
+        ],
+        "correct_answer_index": 3
+      },
+
+      {
+        "type": "drag_text",
+        "answers": [
+          ["Je m'appelle Joly.", "Adım Joly."],
+          ["Comment vous appelez-vous", "Adınız nedir?"],
+          ["Comment tu t'appeles", "Adın ne?"]
         ]
       },
 
@@ -227,7 +299,7 @@
         "text": "Comment tu t'appeles?",
         "answers": [
           "Ça va mal.",
-          "Je m'appele Bernard.",
+          "Je m'appelle Bernard.",
           "Ça va bien.",
           "Elle s'appele Joly."
         ],
@@ -245,78 +317,370 @@
         ],
         "correct_answer_index": 2
       },
-      {
-        "type": "select_from_text",
-        "path": "assets/audio/je_mappele_bernard.mp3",
-        "text": "Comment il s’appelle?",
-        "answers": [
-          "Elle s’appelle Coraline.",
-          "Il s’appelle Bernard.",
-          "Je vais mal.",
-          "Je m’appelle Joly."
-        ],
-        "correct_answer_index": 1
-      }
-    ]
-  },
 
-
-
-
-  {
-    "title": "Kendini Tanıtma",
-    "status": "completed",
-    "image": "assets/images/introduce.png",
-    "pages": [
-      {
-        "type": "drag",
-        "answers": [
-          ["papa", "baba"],
-          ["mama", "anne"]
-        ]
-      },
       {
         "type": "dialogue_order",
         "path": "assets/audio/dialogue_1.mp3",
         "answers": [
-          "Bonjour madame Joly, ça va bien et vous?",
-          "Ça va merci. Au revoir monsieur.",
-          "Au revoir madame.",
-          "Bonjour monsieur Alexandre. Comment allez-vous?"
+          "Ça va bien. Et vous?",
+          "Merci, je vais bien. Comment vous vous appelez?",
+          "Je m'appelle Jolie.",
+          "Bonjour, comment ça va?"
         ],
-        "indexes": [1, 2, 3, 4],
-        "correct_answer_index": 1
-      },
-      {
-        "type": "audio_match",
-        "text": "une cuisinière",
-        "answers": [
-          "assets/audio/moo.mp3",
-          "assets/audio/une_cuisiniere.mp4"
-        ],
-        "correct_answer_index": 1,
-        "complete": "Ben bir aşçıyım."
+        "indexes": [2, 3, 4, 1]
       }
     ]
   },
+
+
+
+
   {
     "title": "Ülkeler",
-    "status": "onProgress",
-    "image": "assets/images/food_icon.png",
+    "status": "completed",
+    "image": "assets/images/countries.png",
     "pages": [
       {
-        "type": "complete_text",
-        "image": "assets/images/a.jpg",
-        "text": "Je suis...",
-        "answer": "une cuisinière",
-        "complete": "Ben bir aşçıyım."
-      },
-      {
         "type": "text",
-        "text": "qweqweqweeqw"
+        "text": "\t\tFransızcada her ülkenin \"Féminin ve Masculin\" olarak cinsiyeti vardır. Féminin ülkeler \"La\" ile belirtilirken Masculin ülkeler \"Le\" ile ifade edilir. Sesli harf ile başlayan ülkeler féminin, masculin fark etmeksizin \"L'\" alır. Amerika birleşik devletleri, Seyşeller gibi çoğul ifade edilen ülkeler ise \"Les\" alır.\n\n\t\tMilliyetleri ifade ederken konuşan kişinin cinsiyetine göre kelimemizdeğişir ve bazı ekler alır. \"Nationalité\" tablomuzda masculin bölümü erkekler için, feminin bölümü kadınlar için kullanılır."
+      },
+
+      {
+        "type": "table",
+        "rows": [
+          ["Quelle est ta nationalité?\n\n- Je suis français/française.", "Milliyetin nedir?\nFransızım."],
+          ["Quelle est votre nationalité?\n\n- Je suis canadien/canadienne.", "Milliyetiniz nedir?\nKanadalıyım."]
+        ],
+        "paths": [
+          "assets/audio/bonjour.mp4",
+          "assets/audio/salut.mp3"
+        ]
+      },
+
+      {
+        "type": "table",
+        "rows": [
+          ["La France", "Fransa"],
+          ["L'Angleterre", "İngiltere"],
+          ["Le Japon", "Japonya"],
+          ["Les Pays-Bas", "Hollanda"],
+          ["Le Chine", "Çin"],
+          ["Le Mexique", "Meksika"],
+          ["Les Etats-Unis", "Amerika"],
+          ["Le Maroc", "Fas"]
+        ],
+        "paths": [
+          "assets/audio/comment_tu_tappeles_je_mappele_bernard.mp3",
+          "assets/audio/quel_est_ton_prenom_mon_prenom_est_caroline.mp3",
+          "assets/audio/comment_vous_appelez_vous_je_mappele_alexandre.mp3",
+          "assets/audio/bonne_nuit.mp3"
+        ]
+      },
+
+      {
+        "type": "table",
+        "rows": [
+          ["Français(m.)\nfrançaise(f.)", "Fransız"],
+          ["Anglais(m.)\nAnglaise(f.)", "İngiliz"],
+          ["Japonais(m.)\nJaponaise(f.)", "Japon"],
+          ["Neérlandais(m.)\nNeérlandaise(f.)", "Hollandalı"],
+          ["Chinois(m.)\nChinoise(f.)", "Çinli"],
+          ["Mexicain(m.)\nMexicaine(f.)", "Meksikalı"],
+          ["Américain(m.)\nAméricaine(f.)", "Amerikan"],
+          ["Marocain(m.)\nMarocaine(f.)", "Faslı"]
+        ],
+        "paths": [
+          "assets/audio/comment_tu_tappeles_je_mappele_bernard.mp3",
+          "assets/audio/quel_est_ton_prenom_mon_prenom_est_caroline.mp3",
+          "assets/audio/comment_vous_appelez_vous_je_mappele_alexandre.mp3",
+          "assets/audio/bonne_nuit.mp3"
+        ]
+      },
+
+
+
+      {
+        "type": "drag_text",
+        "answers": [
+          ["Français", "Fransız"],
+          ["Anglais", "İngiliz"],
+          ["Japonais", "Japon"],
+          ["Neérlandais", "Hollandalı"],
+          ["Chinois", "Çinli"]
+
+        ]
+      },
+
+      {
+        "type": "drag_image",
+        "answers": [
+          ["Américain", "assets/images/america.png"],
+          ["Marocain", "assets/images/morocco.png"],
+          ["Espagnol", "assets/images/spain.png"],
+          ["Canadien", "assets/images/canada.png"]
+        ]
+      },
+
+      {
+        "type": "drag_text",
+        "answers": [
+          ["Mexicain", "Meksikalı"],
+          ["Américain", "Amerikan"],
+          ["Marocain", "Faslı"]
+        ]
+      },
+
+
+
+      {
+        "type": "select_from_text",
+        "path": "",
+        "text": "Coraline (f.) est...",
+        "answers": [
+          "française",
+          "français"
+        ],
+        "correct_answer_index": 0
+      },
+
+      {
+        "type": "select_from_text",
+        "path": "",
+        "text": "Bernard (m.) est...",
+        "answers": [
+          "français",
+          "française"
+        ],
+        "correct_answer_index": 0
+      },
+
+      {
+        "type": "select_from_text",
+        "path": "",
+        "text": "Carlos (m.) est...",
+        "answers": [
+          "espagnole",
+          "espagnol"
+        ],
+        "correct_answer_index": 1
+      },
+
+      {
+        "type": "select_from_text",
+        "path": "",
+        "text": "Coraline (f.) est...",
+        "answers": [
+          "française",
+          "français"
+        ],
+        "correct_answer_index": 0
+      },
+
+      {
+        "type": "select_from_text",
+        "path": "",
+        "text": "Alparslan (m.) est...",
+        "answers": [
+          "turque",
+          "turc"
+        ],
+        "correct_answer_index": 1
+      },
+
+      {
+        "type": "select_from_text",
+        "path": "",
+        "text": "Alessa (f.) est...",
+        "answers": [
+          "italien",
+          "italienne"
+        ],
+        "correct_answer_index": 1
+      },
+
+      {
+        "type": "drag_text",
+        "answers": [
+          ["italien", "masculin"],
+          ["japonais", "masculin"],
+          ["espagnole", "feminin"],
+          ["anglais", "masculin"],
+          ["chinoise", "feminin"],
+          ["française", "feminin"],
+          ["canadienne", "feminin"]
+        ]
       }
     ]
   },
+
+
+
+  {
+    "title": "Ülkeler 2",
+    "status": "completed",
+    "image": "assets/images/countries.png",
+    "pages": [
+
+      {
+        "type": "table",
+        "rows": [
+          ["L'Espagne", "İspanya"],
+          ["Le Canada", "Kanada"],
+          ["Le Brésil", "Brezilya"],
+          ["L'Égypte", "Mısır"],
+          ["L'Espagne", "İspanya"],
+          ["L'Inde", "Hindistan"],
+          ["La Suisse", "İsviçre"],
+          ["La Belgique", "Belçika"]
+        ],
+        "paths": [
+          "assets/audio/comment_tu_tappeles_je_mappele_bernard.mp3",
+          "assets/audio/quel_est_ton_prenom_mon_prenom_est_caroline.mp3",
+          "assets/audio/comment_vous_appelez_vous_je_mappele_alexandre.mp3",
+          "assets/audio/bonne_nuit.mp3"
+        ]
+      },
+
+      {
+        "type": "table",
+        "rows": [
+          ["Espagnol(m.)\nEspagnole(f.)", "İspanyol"],
+          ["Canadien(m.)\nCanadienne(f.)", "Kanadalı"],
+          ["Brésilien(m.)\nBrésilienne(f.)", "Brezilyalı"],
+          ["Égyptien(m.)\nÉgyptienne(f.)", "Mısırlı"],
+          ["Indien(m.)\nIndienne(f.)", "Hint"],
+          ["Suisse(m.)\nSuisse(f.)", "İsviçreli"],
+          ["Belge(m.)\nBelge(f.)", "Belçikalı"]
+        ],
+        "paths": [
+          "assets/audio/comment_tu_tappeles_je_mappele_bernard.mp3",
+          "assets/audio/quel_est_ton_prenom_mon_prenom_est_caroline.mp3",
+          "assets/audio/comment_vous_appelez_vous_je_mappele_alexandre.mp3",
+          "assets/audio/bonne_nuit.mp3"
+        ]
+      },
+
+
+
+      {
+        "type": "drag_text",
+        "answers": [
+          ["Canadienne", "Kanadalı"],
+          ["Suisse", "İsviçreli"],
+          ["Belge", "Belçikalı"],
+          ["Espagnol", "İspanyol"],
+          ["Indien", "\"Hint\""],
+          ["Égyptienne", "Mısırlı"],
+          ["Brésilien", "Brezilyalı"]
+        ]
+      },
+
+      {
+        "type": "drag_image",
+        "answers": [
+          ["Américain", "assets/images/america.png"],
+          ["Marocain", "assets/images/morocco.png"],
+          ["Espagnol", "assets/images/spain.png"],
+          ["Canadien", "assets/images/canada.png"]
+        ]
+      },
+
+      {
+        "type": "drag_text",
+        "answers": [
+          ["Américain", "Amerikan"],
+          ["Marocain", "Faslı"],
+          ["Espagnol", "İspanyol"],
+          ["Canadien", "Kanadalı"]
+        ]
+      },
+
+
+
+      {
+        "type": "select_from_text",
+        "path": "",
+        "text": "Coraline (f.) est...",
+        "answers": [
+          "française",
+          "français"
+        ],
+        "correct_answer_index": 0
+      },
+
+      {
+        "type": "select_from_text",
+        "path": "",
+        "text": "Bernard (m.) est...",
+        "answers": [
+          "français",
+          "française"
+        ],
+        "correct_answer_index": 0
+      },
+
+      {
+        "type": "select_from_text",
+        "path": "",
+        "text": "Carlos (m.) est...",
+        "answers": [
+          "espagnole",
+          "espagnol"
+        ],
+        "correct_answer_index": 1
+      },
+
+      {
+        "type": "select_from_text",
+        "path": "",
+        "text": "Coraline (f.) est...",
+        "answers": [
+          "française",
+          "français"
+        ],
+        "correct_answer_index": 0
+      },
+
+      {
+        "type": "select_from_text",
+        "path": "",
+        "text": "Alparslan (m.) est...",
+        "answers": [
+          "turque",
+          "turc"
+        ],
+        "correct_answer_index": 1
+      },
+
+      {
+        "type": "select_from_text",
+        "path": "",
+        "text": "Alessa (f.) est...",
+        "answers": [
+          "italien",
+          "italienne"
+        ],
+        "correct_answer_index": 1
+      },
+
+      {
+        "type": "drag_text",
+        "answers": [
+          ["italien", "masculin"],
+          ["japonais", "masculin"],
+          ["espagnole", "feminin"],
+          ["anglais", "masculin"],
+          ["chinoise", "feminin"],
+          ["française", "feminin"],
+          ["canadienne", "feminin"]
+        ]
+      }
+    ]
+  },
+
+
+
+
   {
     "title": "Lesson 4",
     "status": "locked",

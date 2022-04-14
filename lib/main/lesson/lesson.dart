@@ -146,11 +146,11 @@ class LessonState extends State<Lesson> {
       ScaffoldMessenger.of(context).clearSnackBars();
       switch(data.isNotEmpty ? page['type'] : null){
         case "text":
-          return Text("Text");
+          return CreateText(page['text']);
         case "video":
           return CreateVideo(page['path']);
-        case "word":
-          return CreateWord(page['path'], page['word'], page['sentence']);
+        // case "word":
+        //   return CreateWord(page['path'], page['word'], page['sentence']);
         case "audio_match":
           return CreateAudioMatch(page['answers'], page['text'], page['correct_answer_index'], page['complete']);
         case "complete_text":
@@ -166,8 +166,10 @@ class LessonState extends State<Lesson> {
           return CreateAnswerFromImage(page['correct_answer_index'], page['answers'], page['img'],page['path']);
         case "select_from_text":
           return CreateAnswerFromText(page['correct_answer_index'], page['answers'], page['text'], page['path']);
-        case "drag":
+        case "drag_text":
           return CreateDragText(page['answers']);
+        case "drag_image":
+          return CreateDragImage(page['answers']);
         default:
           return Text("Bir hata oluştu. " + page.toString());
       }

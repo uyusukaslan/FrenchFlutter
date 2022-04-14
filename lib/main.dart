@@ -44,11 +44,11 @@ class _SplashState extends State {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Future.delayed(Duration(milliseconds: 2000), (){
+    Future.delayed(Duration(milliseconds: 10), (){
       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Home()), (route) => false);
     });
 
-    Future.delayed(Duration(seconds: 1), (){
+    Future.delayed(Duration(seconds: 2), (){
       FlutterNativeSplash.remove();
     });
   }
@@ -57,9 +57,9 @@ class _SplashState extends State {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      body: Center(
-        child: Image.asset("assets/images/kalp.gif") ,
-      ),
+      // body: Center(
+      //   child: Image.asset("assets/images/kalp.gif") ,
+      // ),
     );
 
   }
