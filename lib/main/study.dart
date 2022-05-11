@@ -56,36 +56,39 @@ class _StudyState extends State<Study> {
 
   Widget buildBody(BuildContext context){
 
-    return FutureBuilder(
-      builder: (context, snapshot) {
-
-        if (snapshot.connectionState == ConnectionState.done){
-          return ListView.builder(
-            itemCount: _data.length,
-            itemBuilder: (BuildContext context, int index){
-              return createLessonCard(_data[index]['title'], _data[index]['status'], index, _data[index]['image']);
-            },
-          );
-        }
-
-        else if(snapshot.hasError){
-          return Text(snapshot.error.toString());
-        }
-
-        else{
-          print(snapshot.toString());
-          return const SizedBox(
-            child: CircularProgressIndicator(),
-            width: 60,
-            height: 60,
-          );
-        }
-
+    return ListView.builder(
+      itemCount: _data.length,
+      itemBuilder: (BuildContext context, int index){
+        return createLessonCard(_data[index]['title'], _data[index]['status'], index, _data[index]['image']);
+        //createLessonCard(_data[index]['title'], _data[index]['status'], index, _data[index]['image']);
       },
+    );
 
-      future: jsonData,
-
-      );
+    // return FutureBuilder(
+    //   builder: (context, snapshot) {
+    //
+    //     if (snapshot.connectionState == ConnectionState.done){
+    //
+    //     }
+    //
+    //     else if(snapshot.hasError){
+    //       return Text(snapshot.error.toString());
+    //     }
+    //
+    //     else{
+    //       print(snapshot.toString());
+    //       return const SizedBox(
+    //         child: CircularProgressIndicator(),
+    //         width: 60,
+    //         height: 60,
+    //       );
+    //     }
+    //
+    //   },
+    //
+    //   future: jsonData,
+    //
+    //   );
 
 
 
@@ -149,69 +152,52 @@ class _StudyState extends State<Study> {
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
       onTap: () => changePage(index, _isCompleted, _isInProgress),
-      child: Flexible(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(8),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(35),
-              child: Container(
-                color: _isInProgress ? Color(0xffedf0f8) : Color(0x0000000),
-                padding: _isInProgress ? EdgeInsets.symmetric(vertical: 15, horizontal: 0) : EdgeInsets.all(0),
-                child: Padding(
-                  padding: const EdgeInsets.all(13.0),
-                  child: Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Visibility(
-                          visible: !_isInProgress,
-                          child:
-                        _isCompleted
-                            ? CircleAvatar(child: Icon(Icons.done_rounded, color: Colors.white), backgroundColor: Color(0xffff7548), radius: 15,)
-                            : CircleAvatar(child: Icon(Icons.lock_rounded, color: Color(0xffb1b8d1)), backgroundColor: Color(0xffedf0f8), radius: 15),
-                        ),
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(35),
+            child: Container(
+              color: _isInProgress ? Color(0xffedf0f8) : Color(0x0000000),
+              padding: _isInProgress ? EdgeInsets.symmetric(vertical: 15, horizontal: 0) : EdgeInsets.all(0),
+              child: Padding(
+                padding: const EdgeInsets.all(13.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Visibility(
+                      visible: !_isInProgress,
+                      child:
+                    _isCompleted
+                        ? CircleAvatar(child: Icon(Icons.done_rounded, color: Colors.white), backgroundColor: Color(0xffff7548), radius: 15,)
+                        : CircleAvatar(child: Icon(Icons.lock_rounded, color: Color(0xffb1b8d1)), backgroundColor: Color(0xffedf0f8), radius: 15),
+                    ),
 
-                        !_isInProgress
-                          ? SizedBox(width: 10,)
-                          : SizedBox(width: 10 + 2 * 15),
+                    !_isInProgress
+                      ? SizedBox(width: 10,)
+                      : SizedBox(width: 10 + 2 * 15),
 
 
-                        Expanded(
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              !_isCompleted
-                                ? Flexible(
-                                  child: SquarePercentIndicator(
-                                    startAngle: StartAngle.topLeft,
-                                    width: 80,
-                                    height: 80,
-                                    progress: _isInProgress ?  progress : 0,
-                                    reverse: false,
-                                    progressWidth: 3,
-                                    shadowWidth: 3,
-                                    progressColor: Color(0xffff7548),
-                                    shadowColor: _isInProgress ? Color(0xffffffff) : Color(0xffedf0f8),
-                                    borderRadius: 28,
-                                    child: ClipRRect(borderRadius: BorderRadius.all(Radius.circular(28)),
-                                      child: Container(
-                                        child: Padding(
-                                          padding: EdgeInsets.all(13),
-                                          child: Image.asset(path),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                )
-
-                              : Flexible(
+                    Expanded(
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          !_isCompleted
+                            ? Flexible(
+                              child: SquarePercentIndicator(
+                                startAngle: StartAngle.topLeft,
+                                width: 80,
+                                height: 80,
+                                progress: _isInProgress ?  progress : 0,
+                                reverse: false,
+                                progressWidth: 3,
+                                shadowWidth: 3,
+                                progressColor: Color(0xffff7548),
+                                shadowColor: _isInProgress ? Color(0xffffffff) : Color(0xffedf0f8),
+                                borderRadius: 28,
                                 child: ClipRRect(borderRadius: BorderRadius.all(Radius.circular(28)),
                                   child: Container(
-                                    color: Color(0xffedf0f8),
-                                    width: 80,
-                                    height: 80,
                                     child: Padding(
                                       padding: EdgeInsets.all(13),
                                       child: Image.asset(path),
@@ -219,21 +205,34 @@ class _StudyState extends State<Study> {
                                   ),
                                 ),
                               ),
-                            ],
+                            )
+
+                          : Flexible(
+                            child: ClipRRect(borderRadius: BorderRadius.all(Radius.circular(28)),
+                              child: Container(
+                                color: Color(0xffedf0f8),
+                                width: 80,
+                                height: 80,
+                                child: Padding(
+                                  padding: EdgeInsets.all(13),
+                                  child: Image.asset(path),
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
-
-
-
-                        Flexible(
-                          child: ListTile(
-                            title: Text("Leçon " + (index+1).toString(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
-                            subtitle: Text(name, style: TextStyle(fontSize: 14)),
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
+
+
+
+                    Flexible(
+                      child: ListTile(
+                        title: Text("Leçon " + (index+1).toString(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
+                        subtitle: Text(name, style: TextStyle(fontSize: 14)),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

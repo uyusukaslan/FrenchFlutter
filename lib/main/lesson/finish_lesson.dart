@@ -100,19 +100,32 @@ class _FinishLessonState extends State<FinishLesson> {
                 ),
 
                 Align(
-                  alignment: Alignment.center,
-                  child: ElevatedButton(
-                    onPressed: (){
-                      Future((){
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(builder: (context) => Home()),
-                              (Route<dynamic> route) => false,
-                        );
-                      });
 
-                    },
-                    child: Text("DERSİ BİTİR"),
+                  alignment: Alignment.center,
+
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width * 2 / 3,
+                    height: MediaQuery.of(context).size.width / 8,
+                    child: ElevatedButton(
+                      child: const Text(
+                        "DERSİ BİTİR",
+                        style: TextStyle(fontSize: 19, fontWeight: FontWeight.w600),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        shadowColor: Colors.transparent,
+                        primary: Color(0xffff7548),
+                      ),
+                      onPressed: (){
+                        Future((){
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(builder: (context) => Home()),
+                                (Route<dynamic> route) => false,
+                          );
+                        });
+
+                      },
+                    ),
                   ),
                 )
               ],

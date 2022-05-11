@@ -2,6 +2,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:french/main.dart';
+import 'package:french/main/lesson/stories.dart';
 import 'package:french/main/profile.dart';
 import 'package:french/main/study.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,12 +17,14 @@ class Home extends StatefulWidget {
 }
 
 
-class HomeState extends State {
+class HomeState extends State<Home> {
 
   int _page = 0;
 
   @override
   Widget build(BuildContext context) {
+
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -45,11 +48,12 @@ class HomeState extends State {
 
     PersistentTabController _controller;
 
-    _controller = PersistentTabController(initialIndex: 0);
+    _controller = PersistentTabController(initialIndex: 1);
 
 
     return PersistentTabView(
       context,
+      navBarHeight: 60,
       controller: _controller,
       screens: _buildScreens(),
       items: _navBarsItems(),
@@ -74,7 +78,7 @@ class HomeState extends State {
         curve: Curves.ease,
         duration: Duration(milliseconds: 200),
       ),
-      navBarStyle: NavBarStyle.style2, // Choose the nav bar style with this property.
+      navBarStyle: NavBarStyle.style6, // Choose the nav bar style with this property.
     );
     
     /*CurvedNavigationBar(
@@ -127,16 +131,16 @@ class HomeState extends State {
 
   List<Widget> _buildScreens() {
     return [
+      Stories(),
       Study(),
-      Profile(),
       Profile()
     ];
   }
 
   Widget changePage(int page){
     switch (page){
-      case 0: return Study();
-      case 1: return Profile();
+      case 0: return Stories();
+      case 1: return Study();
       case 2: return Profile();
     }
     return Profile();
@@ -145,20 +149,25 @@ class HomeState extends State {
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
       PersistentBottomNavBarItem(
-        icon: Icon(CupertinoIcons.home),
-        title: ("Home"),
+        textStyle: TextStyle(fontSize: 14),
+        icon: Icon(CupertinoIcons.book),
+        title: ("Hikayeler"),
         activeColorPrimary: CupertinoColors.activeBlue,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
+
       PersistentBottomNavBarItem(
-        icon: Icon(CupertinoIcons.add),
-        title: ("Settings"),
+        textStyle: TextStyle(fontSize: 14),
+        icon: Icon(CupertinoIcons.home, ),
+        title: ("Öğren"),
         activeColorPrimary: CupertinoColors.activeBlue,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
+
       PersistentBottomNavBarItem(
+        textStyle: TextStyle(fontSize: 14),
         icon: Icon(CupertinoIcons.profile_circled),
-        title: ("Profile"),
+        title: ("Profil"),
         activeColorPrimary: CupertinoColors.activeBlue,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),

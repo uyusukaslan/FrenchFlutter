@@ -91,7 +91,15 @@ class LessonState extends State<Lesson> {
                   }
                 ),
             ),
-          )
+          ),
+          // Visibility(
+          //   visible: page_index.value  1,
+          //   child: IconButton(
+          //     icon: Icon(CupertinoIcons.clear),
+          //     color: Color(0xffffffff),
+          //     onPressed: () => previousPage(),
+          //   ),
+          // ),
         ],
       ),
       centerTitle: true,
@@ -124,13 +132,6 @@ class LessonState extends State<Lesson> {
     if (page_index.value > data[_lesson_index]['pages'].length - 1){
 
       ScaffoldMessenger.of(context).clearSnackBars();
-
-        data[5]['title'] = "completed";
-
-        File('assets/data/lesson_data/lesson_data.json').writeAsString(jsonEncode(data));
-
-        print("VERİ" + data[5]['title']);
-
 
         Future.delayed(Duration(milliseconds: 10), (){
           Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) =>
