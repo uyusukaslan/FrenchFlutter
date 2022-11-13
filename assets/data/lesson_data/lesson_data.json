@@ -101,9 +101,9 @@
         "type": "select_from_audio",
         "path": "assets/audio/je_mappele_jolie.mp3",
         "answers": [
-          "Je m'appelle Jolie.",
+          "Je m'appelle Coraline.",
           "Je m'appelle Joly.",
-          "Tu t'appele Jolie.",
+          "Tu t'appele Joly.",
           "Elle s'appele Jolie."
         ],
         "correct_answer_index": 1
@@ -278,10 +278,10 @@
         "answers": [
           "Je m'appelle Coraline.",
           "Je m'appelle Bernard.",
-          "Mon prénom est Coraline.",
+          "Je suis Joly.",
           "Je suis Joly."
         ],
-        "correct_answer_index": 3
+        "correct_answer_index": 2
       },
 
       {
@@ -324,7 +324,7 @@
         "answers": [
           "Ça va bien. Et vous?",
           "Merci, je vais bien. Comment vous vous appelez?",
-          "Je m'appelle Jolie.",
+          "Je m'appelle Joly.",
           "Bonjour, comment ça va?"
         ],
         "indexes": [2, 3, 4, 1]
@@ -353,7 +353,7 @@
         ],
         "paths": [
           "assets/audio/quel_est_ta_nationalite_je_suis_francais.mp3",
-          "assets/audio/quel_est_votre_nationalite_je_suis_francais.mp3"
+          "assets/audio/quel_est_votre_nationalite_je_suis_canadienne.mp3"
         ]
       },
 
@@ -994,11 +994,11 @@
         "type": "table",
         "rows": [
           ["Quel âge as tu?\n\n - J'ai dix-sept ans.", "Kaç yaşındasın?\n\n - 17 yaşındayım."],
-          ["Quel âge avez-vous?,\n\n - J'ai dix-sept ans", "Kaç yaşındasınız?\n\n - 17 yaşındayım."]
+          ["Quel âge avez-vous?,\n\n - J'ai vingt ans", "Kaç yaşındasınız?\n\n - 20 yaşındayım."]
         ],
         "paths": [
-          "assets/audio/quel_age_as_tu_jai_dix_ans.mp3",
-          "assets/audio/quel_age_as_tu_jai_dix_sept_ans.mp3"
+          "assets/audio/quel_age_as_tu_jai_dix_sept_ans.mp3",
+          "assets/audio/quel_age_avez_vous_je_vingt_ans.mp3 "
         ]
       },
 
